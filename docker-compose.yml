@@ -1,0 +1,12 @@
+version: '3'
+services:
+  ragflow:
+    image: infiniflow/ragflow:latest
+    ports:
+      - "9380:9380"
+      - "80:80"
+    environment:
+      - TZ=Asia/Kolkata
+    volumes:
+      - ./ragflow_data:/root/ragflow_data
+    restart: on-failure

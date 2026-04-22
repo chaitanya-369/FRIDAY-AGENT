@@ -1,0 +1,24 @@
+version: '3'
+
+tasks:
+  dev:
+    desc: "Run the full FRIDAY meta-development stack"
+    cmds:
+      - task: backend
+      - task: frontend
+
+  backend:
+    desc: "Start the FastAPI backend"
+    cmds:
+      - ./venv/Scripts/python -m uvicorn friday.core.brain:app --reload
+
+  frontend:
+    desc: "Start the React/Vite dashboard"
+    dir: frontend
+    cmds:
+      - bun dev
+
+  update-graph:
+    desc: "Update the Graphify code visualization"
+    cmds:
+      - graphify update .

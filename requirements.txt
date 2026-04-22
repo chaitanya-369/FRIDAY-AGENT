@@ -1,0 +1,20 @@
+anthropic>=0.25.0
+fastapi>=0.110.0
+uvicorn[standard]>=0.29.0
+python-dotenv>=1.0.0
+pydantic>=2.7.0
+pydantic-settings>=2.2.0
+pytest>=8.0.0
+groq>=0.5.0
+google-generativeai>=0.5.0
+# New Expansion Dependencies
+playwright>=1.42.0
+sentry-sdk[fastapi]>=1.43.0
+sqlmodel>=0.0.16
+alembic>=1.13.1
+slack-sdk>=3.27.1
+PyGithub>=2.2.0
+pre-commit>=3.7.0
+# Advanced Meta-Tools
+langfuse>=2.0.0
+infisical-python>=2.0.0

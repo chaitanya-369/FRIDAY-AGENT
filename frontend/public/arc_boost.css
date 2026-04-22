@@ -1,0 +1,24 @@
+/* 
+ * FRIDAY Agent Arc Boost Template 
+ * To use: 
+ * 1. Open Arc Browser
+ * 2. Hit Cmd+T and type "New Boost"
+ * 3. Choose the FRIDAY dashboard URL
+ * 4. Paste this CSS and the accompanying JS
+ */
+
+body {
+  --friday-accent: #00ffcc;
+  --friday-bg: #0d0d0d;
+}
+
+#friday-boost-container {
+  border: 2px solid var(--friday-accent);
+  box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+  border-radius: 12px;
+  background-color: var(--friday-bg) !important;
+}
+
+header {
+  border-bottom: 1px solid var(--friday-accent) !important;
+}

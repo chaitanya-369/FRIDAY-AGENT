@@ -156,6 +156,5 @@ cython_debug/
 .vscode/
 
 # Project specific
-graphify-out/
 .agent/
 .cursor/

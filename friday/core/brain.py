@@ -32,6 +32,14 @@ if hasattr(settings, "langfuse_public_key") and settings.langfuse_public_key:
 
 
 class FridayBrain:
+    """
+    Core intelligence component of the FRIDAY Agent.
+
+    This class handles the LLM orchestration, maintaining conversational memory
+    (via a sliding window), and streaming responses back to the client. It dynamically
+    selects between Anthropic, Groq, and Gemini backends based on the application settings.
+    """
+
     def __init__(self):
         # Initialize DB Tables on start
         create_db_and_tables()
@@ -54,16 +62,41 @@ class FridayBrain:
             raise ValueError(f"Unsupported LLM provider: {self.provider}")
 
     def _get_system_prompt(self) -> str:
+        """
+        Retrieves and formats the FRIDAY persona prompt with dynamic context.
+
+        Returns:
+            str: The fully formatted system prompt including current timestamp.
+        """
         return FRIDAY_SYSTEM_PROMPT.format(
             timestamp=datetime.now().isoformat(), day=datetime.now().strftime("%A")
         )
 
     def _update_history(self, role: str, content: str):
+        """
+        Appends a message to the conversation history, maintaining a sliding window of max 40 messages.
+
+        Args:
+            role (str): The role of the speaker (e.g., "user", "assistant").
+            content (str): The content of the message.
+        """
         self.conversation_history.append({"role": role, "content": content})
         if len(self.conversation_history) > 40:
             self.conversation_history = self.conversation_history[-40:]
 
     def stream_process(self, user_input: str) -> Generator[str, None, None]:
+        """
+        Processes user input and streams the LLM response token by token.
+
+        This method routes the request to the configured LLM provider and yields
+        text chunks as they are generated, appending the full response to history upon completion.
+
+        Args:
+            user_input (str): The text input from the user.
+
+        Yields:
+            str: Incremental text chunks of the generated response.
+        """
         self._update_history("user", user_input)
 
         try:

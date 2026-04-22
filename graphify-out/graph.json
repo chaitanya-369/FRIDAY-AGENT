@@ -54,7 +54,7 @@
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\__init__.py",
       "source_location": "L1",
       "id": "d_projects_friday_agent_friday_init_py",
-      "community": 12,
+      "community": 15,
       "norm_label": "__init__.py"
     },
     {
@@ -63,16 +63,16 @@
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\api\\server.py",
       "source_location": "L1",
       "id": "d_projects_friday_agent_friday_api_server_py",
-      "community": 6,
+      "community": 9,
       "norm_label": "server.py"
     },
     {
       "label": "status()",
       "file_type": "code",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\api\\server.py",
-      "source_location": "L25",
+      "source_location": "L26",
       "id": "server_status",
-      "community": 6,
+      "community": 9,
       "norm_label": "status()"
     },
     {
@@ -81,16 +81,16 @@
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\api\\slack_routes.py",
       "source_location": "L1",
       "id": "d_projects_friday_agent_friday_api_slack_routes_py",
-      "community": 7,
+      "community": 10,
       "norm_label": "slack_routes.py"
     },
     {
       "label": "slack_events()",
       "file_type": "code",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\api\\slack_routes.py",
-      "source_location": "L14",
+      "source_location": "L15",
       "id": "slack_routes_slack_events",
-      "community": 7,
+      "community": 10,
       "norm_label": "slack_events()"
     },
     {
@@ -99,7 +99,7 @@
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\api\\__init__.py",
       "source_location": "L1",
       "id": "d_projects_friday_agent_friday_api_init_py",
-      "community": 13,
+      "community": 16,
       "norm_label": "__init__.py"
     },
     {
@@ -115,7 +115,7 @@
       "label": "ChatRequest",
       "file_type": "code",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\api\\routes\\chat.py",
-      "source_location": "L10",
+      "source_location": "L11",
       "id": "chat_chatrequest",
       "community": 2,
       "norm_label": "chatrequest"
@@ -133,19 +133,19 @@
       "label": "chat_endpoint()",
       "file_type": "code",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\api\\routes\\chat.py",
-      "source_location": "L14",
+      "source_location": "L16",
       "id": "chat_chat_endpoint",
       "community": 2,
       "norm_label": "chat_endpoint()"
     },
     {
-      "label": "Stream the response from FRIDAY's brain.",
+      "label": "Stream the response from FRIDAY's brain via Server-Sent Events (SSE).",
       "file_type": "rationale",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\api\\routes\\chat.py",
-      "source_location": "L15",
+      "source_location": "L17",
+      "id": "chat_rationale_17",
       "community": 2,
-      "norm_label": "stream the response from friday's brain.",
-      "id": "chat_rationale_15"
+      "norm_label": "stream the response from friday's brain via server-sent events (sse)."
     },
     {
       "label": "__init__.py",
@@ -153,7 +153,7 @@
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\api\\routes\\__init__.py",
       "source_location": "L1",
       "id": "d_projects_friday_agent_friday_api_routes_init_py",
-      "community": 14,
+      "community": 17,
       "norm_label": "__init__.py"
     },
     {
@@ -162,16 +162,16 @@
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\config\\settings.py",
       "source_location": "L1",
       "id": "d_projects_friday_agent_friday_config_settings_py",
-      "community": 4,
+      "community": 5,
       "norm_label": "settings.py"
     },
     {
       "label": "Settings",
       "file_type": "code",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\config\\settings.py",
-      "source_location": "L4",
+      "source_location": "L5",
       "id": "settings_settings",
-      "community": 4,
+      "community": 5,
       "norm_label": "settings"
     },
     {
@@ -180,7 +180,7 @@
       "source_file": "",
       "source_location": "",
       "id": "basesettings",
-      "community": 4,
+      "community": 5,
       "norm_label": "basesettings"
     },
     {
@@ -189,41 +189,41 @@
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
       "source_location": "L1",
       "id": "d_projects_friday_agent_friday_core_brain_py",
-      "community": 0,
+      "community": 3,
       "norm_label": "brain.py"
     },
     {
       "label": "FridayBrain",
       "file_type": "code",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
-      "source_location": "L33",
+      "source_location": "L34",
       "id": "brain_fridaybrain",
-      "community": 0,
+      "community": 3,
       "norm_label": "fridaybrain"
     },
     {
       "label": ".__init__()",
       "file_type": "code",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
-      "source_location": "L34",
+      "source_location": "L42",
       "id": "brain_fridaybrain_init",
-      "community": 3,
+      "community": 4,
       "norm_label": ".__init__()"
     },
     {
       "label": "._get_system_prompt()",
       "file_type": "code",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
-      "source_location": "L56",
+      "source_location": "L63",
       "id": "brain_fridaybrain_get_system_prompt",
-      "community": 0,
+      "community": 7,
       "norm_label": "._get_system_prompt()"
     },
     {
       "label": "._update_history()",
       "file_type": "code",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
-      "source_location": "L62",
+      "source_location": "L74",
       "id": "brain_fridaybrain_update_history",
       "community": 0,
       "norm_label": "._update_history()"
@@ -232,7 +232,7 @@
       "label": ".stream_process()",
       "file_type": "code",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
-      "source_location": "L67",
+      "source_location": "L86",
       "id": "brain_fridaybrain_stream_process",
       "community": 0,
       "norm_label": ".stream_process()"
@@ -241,16 +241,16 @@
       "label": "._stream_anthropic()",
       "file_type": "code",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
-      "source_location": "L80",
+      "source_location": "L111",
       "id": "brain_fridaybrain_stream_anthropic",
-      "community": 0,
+      "community": 7,
       "norm_label": "._stream_anthropic()"
     },
     {
       "label": "._stream_groq()",
       "file_type": "code",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
-      "source_location": "L93",
+      "source_location": "L124",
       "id": "brain_fridaybrain_stream_groq",
       "community": 0,
       "norm_label": "._stream_groq()"
@@ -259,10 +259,46 @@
       "label": "._stream_gemini()",
       "file_type": "code",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
-      "source_location": "L111",
+      "source_location": "L139",
       "id": "brain_fridaybrain_stream_gemini",
       "community": 0,
       "norm_label": "._stream_gemini()"
+    },
+    {
+      "label": "Core intelligence component of the FRIDAY Agent.          This class handles t",
+      "file_type": "rationale",
+      "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
+      "source_location": "L35",
+      "id": "brain_rationale_35",
+      "community": 3,
+      "norm_label": "core intelligence component of the friday agent.          this class handles t"
+    },
+    {
+      "label": "Retrieves and formats the FRIDAY persona prompt with dynamic context.",
+      "file_type": "rationale",
+      "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
+      "source_location": "L64",
+      "id": "brain_rationale_64",
+      "community": 7,
+      "norm_label": "retrieves and formats the friday persona prompt with dynamic context."
+    },
+    {
+      "label": "Appends a message to the conversation history, maintaining a sliding window of m",
+      "file_type": "rationale",
+      "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
+      "source_location": "L75",
+      "id": "brain_rationale_75",
+      "community": 0,
+      "norm_label": "appends a message to the conversation history, maintaining a sliding window of m"
+    },
+    {
+      "label": "Processes user input and streams the LLM response token by token.",
+      "file_type": "rationale",
+      "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
+      "source_location": "L87",
+      "id": "brain_rationale_87",
+      "community": 0,
+      "norm_label": "processes user input and streams the llm response token by token."
     },
     {
       "label": "database.py",
@@ -270,7 +306,7 @@
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\database.py",
       "source_location": "L1",
       "id": "d_projects_friday_agent_friday_core_database_py",
-      "community": 3,
+      "community": 4,
       "norm_label": "database.py"
     },
     {
@@ -279,16 +315,16 @@
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\database.py",
       "source_location": "L10",
       "id": "database_create_db_and_tables",
-      "community": 3,
+      "community": 4,
       "norm_label": "create_db_and_tables()"
     },
     {
       "label": "get_session()",
       "file_type": "code",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\database.py",
-      "source_location": "L13",
+      "source_location": "L14",
       "id": "database_get_session",
-      "community": 3,
+      "community": 4,
       "norm_label": "get_session()"
     },
     {
@@ -297,7 +333,7 @@
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\persona.py",
       "source_location": "L1",
       "id": "d_projects_friday_agent_friday_core_persona_py",
-      "community": 15,
+      "community": 18,
       "norm_label": "persona.py"
     },
     {
@@ -306,7 +342,7 @@
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\__init__.py",
       "source_location": "L1",
       "id": "d_projects_friday_agent_friday_core_init_py",
-      "community": 16,
+      "community": 19,
       "norm_label": "__init__.py"
     },
     {
@@ -315,7 +351,7 @@
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\frontend\\eslint.config.js",
       "source_location": "L1",
       "id": "d_projects_friday_agent_frontend_eslint_config_js",
-      "community": 17,
+      "community": 20,
       "norm_label": "eslint.config.js"
     },
     {
@@ -324,7 +360,7 @@
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\frontend\\vite.config.ts",
       "source_location": "L1",
       "id": "d_projects_friday_agent_frontend_vite_config_ts",
-      "community": 18,
+      "community": 21,
       "norm_label": "vite.config.ts"
     },
     {
@@ -333,7 +369,7 @@
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\frontend\\src\\App.tsx",
       "source_location": "L1",
       "id": "d_projects_friday_agent_frontend_src_app_tsx",
-      "community": 8,
+      "community": 11,
       "norm_label": "app.tsx"
     },
     {
@@ -342,8 +378,35 @@
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\frontend\\src\\main.tsx",
       "source_location": "L1",
       "id": "d_projects_friday_agent_frontend_src_main_tsx",
-      "community": 8,
+      "community": 11,
       "norm_label": "main.tsx"
+    },
+    {
+      "label": "FridayUI.jsx",
+      "file_type": "code",
+      "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\frontend\\src\\components\\FridayUI.jsx",
+      "source_location": "L1",
+      "id": "d_projects_friday_agent_frontend_src_components_fridayui_jsx",
+      "community": 8,
+      "norm_label": "fridayui.jsx"
+    },
+    {
+      "label": "pad()",
+      "file_type": "code",
+      "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\frontend\\src\\components\\FridayUI.jsx",
+      "source_location": "L516",
+      "id": "fridayui_pad",
+      "community": 8,
+      "norm_label": "pad()"
+    },
+    {
+      "label": "FridayUI()",
+      "file_type": "code",
+      "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\frontend\\src\\components\\FridayUI.jsx",
+      "source_location": "L520",
+      "id": "fridayui_fridayui",
+      "community": 8,
+      "norm_label": "fridayui()"
     },
     {
       "label": "capture_ui.py",
@@ -351,16 +414,16 @@
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\meta_tools\\capture_ui.py",
       "source_location": "L1",
       "id": "d_projects_friday_agent_meta_tools_capture_ui_py",
-      "community": 9,
+      "community": 12,
       "norm_label": "capture_ui.py"
     },
     {
       "label": "capture_screenshot()",
       "file_type": "code",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\meta_tools\\capture_ui.py",
-      "source_location": "L5",
+      "source_location": "L6",
       "id": "capture_ui_capture_screenshot",
-      "community": 9,
+      "community": 12,
       "norm_label": "capture_screenshot()"
     },
     {
@@ -369,16 +432,16 @@
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\meta_tools\\ingest_docs.py",
       "source_location": "L1",
       "id": "d_projects_friday_agent_meta_tools_ingest_docs_py",
-      "community": 10,
+      "community": 13,
       "norm_label": "ingest_docs.py"
     },
     {
       "label": "ingest_directory()",
       "file_type": "code",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\meta_tools\\ingest_docs.py",
-      "source_location": "L13",
+      "source_location": "L14",
       "id": "ingest_docs_ingest_directory",
-      "community": 10,
+      "community": 13,
       "norm_label": "ingest_directory()"
     },
     {
@@ -387,44 +450,17 @@
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\meta_tools\\notify.py",
       "source_location": "L1",
       "id": "d_projects_friday_agent_meta_tools_notify_py",
-      "community": 11,
+      "community": 14,
       "norm_label": "notify.py"
     },
     {
       "label": "send_notification()",
       "file_type": "code",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\meta_tools\\notify.py",
-      "source_location": "L10",
+      "source_location": "L11",
       "id": "notify_send_notification",
-      "community": 11,
+      "community": 14,
       "norm_label": "send_notification()"
-    },
-    {
-      "label": "FridayUI.jsx",
-      "file_type": "code",
-      "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\Project Idea And Details\\FridayUI.jsx",
-      "source_location": "L1",
-      "id": "d_projects_friday_agent_project_idea_and_details_fridayui_jsx",
-      "community": 5,
-      "norm_label": "fridayui.jsx"
-    },
-    {
-      "label": "pad()",
-      "file_type": "code",
-      "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\Project Idea And Details\\FridayUI.jsx",
-      "source_location": "L516",
-      "id": "fridayui_pad",
-      "community": 5,
-      "norm_label": "pad()"
-    },
-    {
-      "label": "FridayUI()",
-      "file_type": "code",
-      "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\Project Idea And Details\\FridayUI.jsx",
-      "source_location": "L520",
-      "id": "fridayui_fridayui",
-      "community": 5,
-      "norm_label": "fridayui()"
     },
     {
       "label": "install_act.ps1",
@@ -432,7 +468,7 @@
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\scripts\\install_act.ps1",
       "source_location": "L1",
       "id": "d_projects_friday_agent_scripts_install_act_ps1",
-      "community": 19,
+      "community": 22,
       "norm_label": "install_act.ps1"
     },
     {
@@ -441,7 +477,7 @@
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\tests\\test_brain.py",
       "source_location": "L1",
       "id": "d_projects_friday_agent_tests_test_brain_py",
-      "community": 0,
+      "community": 6,
       "norm_label": "test_brain.py"
     },
     {
@@ -450,24 +486,33 @@
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\tests\\test_brain.py",
       "source_location": "L9",
       "id": "test_brain_test_sliding_window_memory",
-      "community": 0,
+      "community": 6,
       "norm_label": "test_sliding_window_memory()"
     },
     {
       "label": "test_system_prompt_formatting()",
       "file_type": "code",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\tests\\test_brain.py",
-      "source_location": "L27",
+      "source_location": "L28",
       "id": "test_brain_test_system_prompt_formatting",
-      "community": 0,
+      "community": 6,
       "norm_label": "test_system_prompt_formatting()"
+    },
+    {
+      "label": "Stream the response from FRIDAY's brain.",
+      "file_type": "rationale",
+      "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\api\\routes\\chat.py",
+      "source_location": "L15",
+      "community": 3,
+      "norm_label": "stream the response from friday's brain.",
+      "id": "chat_rationale_15"
     },
     {
       "label": "Processes the input and yields the response token by token.",
       "file_type": "rationale",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
       "source_location": "L27",
-      "community": 20,
+      "community": 23,
       "norm_label": "processes the input and yields the response token by token.",
       "id": "brain_rationale_27"
     }
@@ -525,7 +570,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\api\\server.py",
-      "source_location": "L25",
+      "source_location": "L26",
       "weight": 1.0,
       "_src": "d_projects_friday_agent_friday_api_server_py",
       "_tgt": "server_status",
@@ -537,7 +582,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\api\\slack_routes.py",
-      "source_location": "L14",
+      "source_location": "L15",
       "weight": 1.0,
       "_src": "d_projects_friday_agent_friday_api_slack_routes_py",
       "_tgt": "slack_routes_slack_events",
@@ -549,7 +594,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\api\\routes\\chat.py",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0,
       "_src": "d_projects_friday_agent_friday_api_routes_chat_py",
       "_tgt": "chat_chatrequest",
@@ -561,7 +606,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\api\\routes\\chat.py",
-      "source_location": "L14",
+      "source_location": "L16",
       "weight": 1.0,
       "_src": "d_projects_friday_agent_friday_api_routes_chat_py",
       "_tgt": "chat_chat_endpoint",
@@ -573,7 +618,7 @@
       "relation": "inherits",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\api\\routes\\chat.py",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0,
       "_src": "chat_chatrequest",
       "_tgt": "basemodel",
@@ -597,12 +642,12 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\api\\routes\\chat.py",
-      "source_location": "L15",
+      "source_location": "L17",
       "weight": 1.0,
-      "_src": "chat_rationale_15",
+      "_src": "chat_rationale_17",
       "_tgt": "chat_chat_endpoint",
       "source": "chat_chat_endpoint",
-      "target": "chat_rationale_15",
+      "target": "chat_rationale_17",
       "confidence_score": 1.0
     },
     {
@@ -611,17 +656,17 @@
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\api\\routes\\chat.py",
       "source_location": "L5",
       "weight": 0.8,
-      "_src": "chat_rationale_15",
+      "_src": "chat_rationale_17",
       "_tgt": "brain_fridaybrain",
-      "confidence_score": 0.5,
-      "source": "chat_rationale_15",
-      "target": "brain_fridaybrain"
+      "source": "chat_rationale_17",
+      "target": "brain_fridaybrain",
+      "confidence_score": 0.5
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\config\\settings.py",
-      "source_location": "L4",
+      "source_location": "L5",
       "weight": 1.0,
       "_src": "d_projects_friday_agent_friday_config_settings_py",
       "_tgt": "settings_settings",
@@ -633,7 +678,7 @@
       "relation": "inherits",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\config\\settings.py",
-      "source_location": "L4",
+      "source_location": "L5",
       "weight": 1.0,
       "_src": "settings_settings",
       "_tgt": "basesettings",
@@ -645,7 +690,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
-      "source_location": "L33",
+      "source_location": "L34",
       "weight": 1.0,
       "_src": "d_projects_friday_agent_friday_core_brain_py",
       "_tgt": "brain_fridaybrain",
@@ -657,7 +702,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
-      "source_location": "L34",
+      "source_location": "L42",
       "weight": 1.0,
       "_src": "brain_fridaybrain",
       "_tgt": "brain_fridaybrain_init",
@@ -669,7 +714,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
-      "source_location": "L56",
+      "source_location": "L63",
       "weight": 1.0,
       "_src": "brain_fridaybrain",
       "_tgt": "brain_fridaybrain_get_system_prompt",
@@ -681,7 +726,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
-      "source_location": "L62",
+      "source_location": "L74",
       "weight": 1.0,
       "_src": "brain_fridaybrain",
       "_tgt": "brain_fridaybrain_update_history",
@@ -693,7 +738,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
-      "source_location": "L67",
+      "source_location": "L86",
       "weight": 1.0,
       "_src": "brain_fridaybrain",
       "_tgt": "brain_fridaybrain_stream_process",
@@ -705,7 +750,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
-      "source_location": "L80",
+      "source_location": "L111",
       "weight": 1.0,
       "_src": "brain_fridaybrain",
       "_tgt": "brain_fridaybrain_stream_anthropic",
@@ -717,7 +762,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
-      "source_location": "L93",
+      "source_location": "L124",
       "weight": 1.0,
       "_src": "brain_fridaybrain",
       "_tgt": "brain_fridaybrain_stream_groq",
@@ -729,12 +774,24 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
-      "source_location": "L111",
+      "source_location": "L139",
       "weight": 1.0,
       "_src": "brain_fridaybrain",
       "_tgt": "brain_fridaybrain_stream_gemini",
       "source": "brain_fridaybrain",
       "target": "brain_fridaybrain_stream_gemini",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
+      "source_location": "L35",
+      "weight": 1.0,
+      "_src": "brain_rationale_35",
+      "_tgt": "brain_fridaybrain",
+      "source": "brain_fridaybrain",
+      "target": "brain_rationale_35",
       "confidence_score": 1.0
     },
     {
@@ -762,10 +819,22 @@
       "target": "test_brain_test_system_prompt_formatting"
     },
     {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\api\\routes\\chat.py",
+      "source_location": "L5",
+      "weight": 0.8,
+      "_src": "chat_rationale_15",
+      "_tgt": "brain_fridaybrain",
+      "confidence_score": 0.5,
+      "source": "brain_fridaybrain",
+      "target": "chat_rationale_15"
+    },
+    {
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
-      "source_location": "L51",
+      "source_location": "L58",
       "weight": 1.0,
       "_src": "brain_fridaybrain_init",
       "_tgt": "brain_fridaybrain_get_system_prompt",
@@ -789,7 +858,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
-      "source_location": "L84",
+      "source_location": "L115",
       "weight": 1.0,
       "_src": "brain_fridaybrain_stream_anthropic",
       "_tgt": "brain_fridaybrain_get_system_prompt",
@@ -801,12 +870,24 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
-      "source_location": "L94",
+      "source_location": "L125",
       "weight": 1.0,
       "_src": "brain_fridaybrain_stream_groq",
       "_tgt": "brain_fridaybrain_get_system_prompt",
       "source": "brain_fridaybrain_get_system_prompt",
       "target": "brain_fridaybrain_stream_groq",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
+      "source_location": "L64",
+      "weight": 1.0,
+      "_src": "brain_rationale_64",
+      "_tgt": "brain_fridaybrain_get_system_prompt",
+      "source": "brain_fridaybrain_get_system_prompt",
+      "target": "brain_rationale_64",
       "confidence_score": 1.0
     },
     {
@@ -825,7 +906,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
-      "source_location": "L68",
+      "source_location": "L99",
       "weight": 1.0,
       "_src": "brain_fridaybrain_stream_process",
       "_tgt": "brain_fridaybrain_update_history",
@@ -837,7 +918,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
-      "source_location": "L91",
+      "source_location": "L122",
       "weight": 1.0,
       "_src": "brain_fridaybrain_stream_anthropic",
       "_tgt": "brain_fridaybrain_update_history",
@@ -849,7 +930,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
-      "source_location": "L109",
+      "source_location": "L137",
       "weight": 1.0,
       "_src": "brain_fridaybrain_stream_groq",
       "_tgt": "brain_fridaybrain_update_history",
@@ -861,12 +942,24 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
-      "source_location": "L125",
+      "source_location": "L155",
       "weight": 1.0,
       "_src": "brain_fridaybrain_stream_gemini",
       "_tgt": "brain_fridaybrain_update_history",
       "source": "brain_fridaybrain_update_history",
       "target": "brain_fridaybrain_stream_gemini",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
+      "source_location": "L75",
+      "weight": 1.0,
+      "_src": "brain_rationale_75",
+      "_tgt": "brain_fridaybrain_update_history",
+      "source": "brain_fridaybrain_update_history",
+      "target": "brain_rationale_75",
       "confidence_score": 1.0
     },
     {
@@ -885,7 +978,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
-      "source_location": "L72",
+      "source_location": "L103",
       "weight": 1.0,
       "_src": "brain_fridaybrain_stream_process",
       "_tgt": "brain_fridaybrain_stream_anthropic",
@@ -897,7 +990,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
-      "source_location": "L74",
+      "source_location": "L105",
       "weight": 1.0,
       "_src": "brain_fridaybrain_stream_process",
       "_tgt": "brain_fridaybrain_stream_groq",
@@ -909,12 +1002,24 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
-      "source_location": "L76",
+      "source_location": "L107",
       "weight": 1.0,
       "_src": "brain_fridaybrain_stream_process",
       "_tgt": "brain_fridaybrain_stream_gemini",
       "source": "brain_fridaybrain_stream_process",
       "target": "brain_fridaybrain_stream_gemini",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\brain.py",
+      "source_location": "L87",
+      "weight": 1.0,
+      "_src": "brain_rationale_87",
+      "_tgt": "brain_fridaybrain_stream_process",
+      "source": "brain_fridaybrain_stream_process",
+      "target": "brain_rationale_87",
       "confidence_score": 1.0
     },
     {
@@ -933,7 +1038,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\friday\\core\\database.py",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0,
       "_src": "d_projects_friday_agent_friday_core_database_py",
       "_tgt": "database_get_session",
@@ -956,8 +1061,32 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\frontend\\src\\components\\FridayUI.jsx",
+      "source_location": "L516",
+      "weight": 1.0,
+      "_src": "d_projects_friday_agent_frontend_src_components_fridayui_jsx",
+      "_tgt": "fridayui_pad",
+      "source": "d_projects_friday_agent_frontend_src_components_fridayui_jsx",
+      "target": "fridayui_pad",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\frontend\\src\\components\\FridayUI.jsx",
+      "source_location": "L520",
+      "weight": 1.0,
+      "_src": "d_projects_friday_agent_frontend_src_components_fridayui_jsx",
+      "_tgt": "fridayui_fridayui",
+      "source": "d_projects_friday_agent_frontend_src_components_fridayui_jsx",
+      "target": "fridayui_fridayui",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\meta_tools\\capture_ui.py",
-      "source_location": "L5",
+      "source_location": "L6",
       "weight": 1.0,
       "_src": "d_projects_friday_agent_meta_tools_capture_ui_py",
       "_tgt": "capture_ui_capture_screenshot",
@@ -969,7 +1098,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\meta_tools\\ingest_docs.py",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0,
       "_src": "d_projects_friday_agent_meta_tools_ingest_docs_py",
       "_tgt": "ingest_docs_ingest_directory",
@@ -981,36 +1110,12 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\meta_tools\\notify.py",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0,
       "_src": "d_projects_friday_agent_meta_tools_notify_py",
       "_tgt": "notify_send_notification",
       "source": "d_projects_friday_agent_meta_tools_notify_py",
       "target": "notify_send_notification",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\Project Idea And Details\\FridayUI.jsx",
-      "source_location": "L516",
-      "weight": 1.0,
-      "_src": "d_projects_friday_agent_project_idea_and_details_fridayui_jsx",
-      "_tgt": "fridayui_pad",
-      "source": "d_projects_friday_agent_project_idea_and_details_fridayui_jsx",
-      "target": "fridayui_pad",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\Project Idea And Details\\FridayUI.jsx",
-      "source_location": "L520",
-      "weight": 1.0,
-      "_src": "d_projects_friday_agent_project_idea_and_details_fridayui_jsx",
-      "_tgt": "fridayui_fridayui",
-      "source": "d_projects_friday_agent_project_idea_and_details_fridayui_jsx",
-      "target": "fridayui_fridayui",
       "confidence_score": 1.0
     },
     {
@@ -1029,7 +1134,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "D:\\PROJECTS\\FRIDAY-AGENT\\tests\\test_brain.py",
-      "source_location": "L27",
+      "source_location": "L28",
       "weight": 1.0,
       "_src": "d_projects_friday_agent_tests_test_brain_py",
       "_tgt": "test_brain_test_system_prompt_formatting",

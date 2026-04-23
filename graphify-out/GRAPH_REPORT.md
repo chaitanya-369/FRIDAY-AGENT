@@ -1,7 +1,7 @@
 # Graph Report - D:\PROJECTS\FRIDAY-AGENT  (2026-04-23)
 
 ## Corpus Check
-- 85 files · ~160,771 words
+- 85 files · ~182,826 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -138,8 +138,8 @@
   D:\PROJECTS\FRIDAY-AGENT\friday\api\routes\chat.py → D:\PROJECTS\FRIDAY-AGENT\friday\core\brain.py
 - `Persist field updates to an APIKey row.` --uses--> `APIKey`  [INFERRED]
   D:\PROJECTS\FRIDAY-AGENT\friday\llm\key_pool.py → D:\PROJECTS\FRIDAY-AGENT\friday\llm\models\db_models.py
-- `Return cache hit rate stats.` --uses--> `AnthropicAdapter`  [INFERRED]
-  D:\PROJECTS\FRIDAY-AGENT\friday\memory\retrieval\intent.py → D:\PROJECTS\FRIDAY-AGENT\friday\llm\adapters\anthropic_adapter.py
+- `AnthropicAdapter` --uses--> `Return cache hit rate stats.`  [INFERRED]
+  D:\PROJECTS\FRIDAY-AGENT\friday\llm\adapters\anthropic_adapter.py → D:\PROJECTS\FRIDAY-AGENT\friday\memory\retrieval\intent.py
 - `StreamChunk` --uses--> `Streams responses from DeepSeek models (deepseek-chat, deepseek-reasoner).`  [INFERRED]
   D:\PROJECTS\FRIDAY-AGENT\friday\llm\adapters\base.py → D:\PROJECTS\FRIDAY-AGENT\friday\llm\adapters\deepseek_adapter.py
 - `Emit SQL to stdout without a live DB connection.` --uses--> `ActiveSession`  [INFERRED]
@@ -783,11 +783,11 @@ Nodes (1): Processes the input and yields the response token by token.
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `LLMProvider` connect `Community 1` to `Community 2`, `Community 4`, `Community 5`, `Community 7`, `Community 8`, `Community 9`?**
-  _High betweenness centrality (0.137) - this node is a cross-community bridge._
+  _High betweenness centrality (0.154) - this node is a cross-community bridge._
+- **Why does `Memory` connect `Community 0` to `Community 3`, `Community 4`?**
+  _High betweenness centrality (0.075) - this node is a cross-community bridge._
 - **Why does `StreamChunk` connect `Community 1` to `Community 2`, `Community 3`, `Community 7`?**
-  _High betweenness centrality (0.096) - this node is a cross-community bridge._
-- **Why does `APIKey` connect `Community 1` to `Community 2`, `Community 4`, `Community 5`, `Community 7`, `Community 9`?**
-  _High betweenness centrality (0.086) - this node is a cross-community bridge._
+  _High betweenness centrality (0.073) - this node is a cross-community bridge._
 - **Are the 190 inferred relationships involving `LLMProvider` (e.g. with `Emit SQL to stdout without a live DB connection.` and `Run migrations against the live DB engine.`) actually correct?**
   _`LLMProvider` has 190 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 161 inferred relationships involving `Memory` (e.g. with `ConflictResult` and `ConflictDetector`) actually correct?**

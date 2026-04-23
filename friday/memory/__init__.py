@@ -3,29 +3,36 @@ friday/memory/__init__.py
 
 MemoryBus — the single public facade for the entire FRIDAY Memory Mesh.
 
-All of FridayBrain's memory interactions go through this class.
-Internal implementation details (EpisodeStore, VectorStore, ExtractionPipeline,
-RetrievalEngine) are hidden behind this clean API.
+Phase A: Foundation
+  - WorkingMemory (RAM buffer)
+  - EpisodeStore (SQLite)
+  - VectorStore (ChromaDB)
+  - ExtractionPipeline (Claude Haiku → typed memories)
+  - RetrievalEngine (parallel vector + SQL)
 
-Public API:
-  observe(content, role)          → buffer a turn for async extraction
-  get_context_for(query)          → retrieve ranked memory context (fast)
-  consolidate_session(turns)      → run extraction + persist (called async)
-  get_active_tasks()              → structured task list
-  get_stats()                     → memory health report
-  forget(memory_id)               → Boss asked to forget something
-  search(query)                   → direct memory search for introspection
+Phase B: Intelligence Layer (added here)
+  - KnowledgeGraph (NetworkX + SQLite entity graph)
+  - EntityLinker (post-extraction → KG upsert)
+  - ConflictDetector (post-extraction → contradiction scan)
+  - DecayEngine (APScheduler → Ebbinghaus forgetting curve)
+  - LLMIntentClassifier (replaces keyword intent heuristic in retriever)
 
-Usage in FridayBrain:
-    self.memory = MemoryBus()
-    # On each turn:
-    ctx = self.memory.get_context_for(user_input)
-    system = build_prompt_with(ctx.to_prompt_string())
-    # After response:
-    self.memory.observe_turn(user_input, response_text)
-    # Every 5 turns (fire-and-forget):
-    threading.Thread(target=self.memory.consolidate_session,
-                     args=(self.working.get_raw_history(),), daemon=True).start()
+Public API (unchanged from Phase A — fully backward compatible):
+  observe_turn(user_input, assistant_response)
+  get_context_for(query) → MemoryContext
+  consolidate_session(turns) → ExtractionResult
+  consolidate_session_async(turns)
+  close_session(turns)
+  get_active_tasks() → list[Task]
+  get_stats() → dict
+  forget(memory_id) → bool
+  search(query, limit) → list[Memory]
+
+Phase B additions:
+  get_entity_context(entity_name) → str        ← KG subgraph for prompt
+  get_conflict_report() → list[dict]           ← pending conflicts
+  run_decay_now() → dict                       ← manual decay trigger
+  graph: KnowledgeGraph                        ← direct KG access
 """
 
 from __future__ import annotations
@@ -35,9 +42,14 @@ import uuid
 from typing import Optional
 
 from friday.config.settings import settings
+from friday.memory.conflict import ConflictDetector
+from friday.memory.decay import DecayEngine
 from friday.memory.episodic import EpisodeStore
+from friday.memory.extraction.entity_linker import EntityLinker
 from friday.memory.extraction.pipeline import ExtractionPipeline, ExtractionResult
+from friday.memory.graph import KnowledgeGraph
 from friday.memory.retrieval.engine import QueryIntent as QueryIntent, RetrievalEngine
+from friday.memory.retrieval.intent import LLMIntentClassifier
 from friday.memory.types import Memory, MemoryContext, MemorySource, Task
 from friday.memory.vector_store import VectorStore
 from friday.memory.working import WorkingMemory
@@ -45,82 +57,152 @@ from friday.memory.working import WorkingMemory
 
 class MemoryBus:
     """
-    Single facade for the FRIDAY Memory Mesh.
+    Single facade for the FRIDAY Memory Mesh (Phase A + B).
 
     Lifecycle:
       1. Created once per FridayBrain instance (shared across turns).
       2. observe_turn() buffers each user + assistant turn.
-      3. get_context_for() retrieves and ranks context before each LLM call.
-      4. consolidate_session() runs extraction in a background thread.
+      3. get_context_for() retrieves ranked context before each LLM call.
+      4. consolidate_session_async() runs extraction + KG + conflict detection
+         in a background thread every 5 turns.
+      5. DecayEngine runs automatically every MEMORY_DECAY_INTERVAL_HOURS.
     """
 
     def __init__(self) -> None:
         self._enabled = settings.memory_enabled
 
-        # Storage layers
+        # ── Phase A: Storage layers ───────────────────────────────────────────
         self.working = WorkingMemory()
         self.episode_store = EpisodeStore()
         self.vector_store = VectorStore()
 
-        # Extraction + retrieval
+        # ── Phase A: Extraction + retrieval ───────────────────────────────────
         self.extractor = ExtractionPipeline()
         self.retriever = RetrievalEngine(self.episode_store, self.vector_store)
 
-        # Episode tracking
-        self._current_episode_id: Optional[str] = None
-        self._start_episode()
+        # ── Phase B: Intelligence layer ───────────────────────────────────────
+        self.graph = KnowledgeGraph()
+        self.entity_linker = EntityLinker()
+        self.conflict_detector = ConflictDetector(self.episode_store, self.vector_store)
+        self.decay_engine = DecayEngine(self.episode_store, self.vector_store)
+        self.intent_classifier = LLMIntentClassifier()
 
-        # Background consolidation lock (one at a time)
+        # Wire Phase B into retrieval engine
+        self.retriever.set_intent_classifier(self.intent_classifier)
+        self.retriever.set_graph(self.graph)
+
+        # ── Episode tracking ──────────────────────────────────────────────────
+        self._current_episode_id: Optional[str] = None
         self._consolidation_lock = threading.Lock()
 
-    # ── Observation (buffering turns) ─────────────────────────────────────────
+        # ── Startup sequence ──────────────────────────────────────────────────
+        if self._enabled:
+            self._startup()
+
+    def _startup(self) -> None:
+        """
+        Initialise Phase B components in a background thread to avoid
+        blocking FridayBrain startup (KG load + scheduler start).
+        """
+
+        def _init_phase_b() -> None:
+            try:
+                # Load KG from SQLite into NetworkX RAM graph
+                self.graph.load_from_db()
+            except Exception:
+                pass
+            try:
+                # Start Ebbinghaus decay scheduler
+                interval = getattr(settings, "memory_decay_interval_hours", 24.0)
+                self.decay_engine.start_scheduler(interval_hours=interval)
+            except Exception:
+                pass
+
+        self._start_episode()
+        t = threading.Thread(
+            target=_init_phase_b, daemon=True, name="friday-memory-startup"
+        )
+        t.start()
+
+    # ── Observation ───────────────────────────────────────────────────────────
 
     def observe_turn(self, user_input: str, assistant_response: str) -> None:
         """
-        Buffer a completed turn (user message + assistant reply).
-        Call after each exchange — this is fast (RAM only).
+        Buffer a completed turn in working memory.
+        Call after each exchange — pure RAM, instant.
         """
         if not self._enabled:
             return
-
         self.working.add_turn("user", user_input)
         self.working.add_turn("assistant", assistant_response)
 
-    # ── Context retrieval (on critical path — must be fast) ──────────────────
+    # ── Context retrieval (critical path — must be fast) ─────────────────────
 
     def get_context_for(self, query: str) -> MemoryContext:
         """
         Retrieve a ranked, assembled MemoryContext for the given query.
 
-        Uses parallel vector + SQL search. Typical latency: 50–200ms.
-        Returns an empty MemoryContext if memory is disabled or DB is empty.
+        Phase B: uses LLMIntentClassifier (with LRU cache) instead of keywords.
+        If intent == ENTITY, also injects KG subgraph context into MemoryContext.
+
+        Typical latency: 50–200ms (0ms on cache hit for intent).
+        Returns empty MemoryContext on any failure.
         """
         if not self._enabled:
             return MemoryContext()
 
         try:
-            intent = RetrievalEngine.classify_intent(query)
-            return self.retriever.retrieve(query, intent=intent)
+            # Phase B: LLM intent classification (cached)
+            intent, entity_names = self.intent_classifier.classify_with_entities(query)
+
+            # Run multi-modal retrieval (vector + SQL + optional KG)
+            ctx = self.retriever.retrieve(query, intent=intent)
+
+            # Phase B: inject KG entity context for ENTITY queries
+            if intent == "entity" and entity_names and self.graph.is_available():
+                entities_from_kg = []
+                for name in entity_names[:2]:
+                    entity = self.graph.get_entity(name)
+                    if entity:
+                        entities_from_kg.append(entity)
+                if entities_from_kg:
+                    ctx.entities = entities_from_kg
+
+            # Surface any pending conflict warnings
+            try:
+                pending = self.episode_store.get_pending_conflicts()
+                if pending:
+                    ctx.conflicts = [
+                        f"Memory conflict detected (ID: {c['id'][:8]})"
+                        for c in pending[:3]
+                    ]
+            except Exception:
+                pass
+
+            return ctx
+
         except Exception:
-            # Never crash FridayBrain due to memory failure
             return MemoryContext()
 
     # ── Consolidation (background, off critical path) ─────────────────────────
 
     def consolidate_session(self, turns: list[dict]) -> ExtractionResult:
         """
-        Run extraction pipeline on the given turns and persist results.
+        Run the full extraction + Phase B enrichment pipeline on the given turns.
 
-        Called in a background thread — never blocks the LLM response stream.
-        Uses a lock to prevent concurrent consolidation runs.
+        Pipeline:
+          1. ExtractionPipeline → typed Memory + Task objects
+          2. EpisodeStore.save_memory() → SQLite (Tier 1)
+          3. VectorStore.upsert_many() → ChromaDB (Tier 2a)
+          4. EntityLinker.link() → KnowledgeGraph (Tier 2b)       [Phase B]
+          5. ConflictDetector.scan() → ConflictRow if needed       [Phase B]
 
-        Returns the ExtractionResult for diagnostics.
+        Called in a background thread — never blocks the LLM stream.
         """
         if not self._enabled or not turns:
             return ExtractionResult(success=True)
 
         if not self._consolidation_lock.acquire(blocking=False):
-            # Already running — skip this round
             return ExtractionResult(success=True)
 
         try:
@@ -141,10 +223,7 @@ class MemoryBus:
             self._consolidation_lock.release()
 
     def consolidate_session_async(self, turns: list[dict]) -> None:
-        """
-        Fire-and-forget wrapper for consolidate_session().
-        Runs in a daemon thread — safe to call from FridayBrain.
-        """
+        """Fire-and-forget wrapper for consolidate_session()."""
         t = threading.Thread(
             target=self.consolidate_session,
             args=(turns,),
@@ -156,19 +235,14 @@ class MemoryBus:
     def close_session(self, turns: list[dict]) -> None:
         """
         Close the current episode with a summary.
-        Called when the user disconnects or /reset is issued.
-        Runs synchronously because we want the summary before the episode closes.
+        Called on user disconnect or /reset.
         """
         if not self._enabled:
             return
 
-        # Generate session summary
         summary = self.extractor.extract_session_summary(turns)
-
-        # Extract final memories from this session
         result = self.consolidate_session(turns)
 
-        # Close the episode row
         if self._current_episode_id:
             self.episode_store.close_episode(
                 episode_id=self._current_episode_id,
@@ -178,10 +252,9 @@ class MemoryBus:
                 memory_ids=[m.id for m in result.memories] if result.success else [],
             )
 
-        # Start a fresh episode for the next session
         self._start_episode()
 
-    # ── Direct access (for autopilot, tools, introspection) ──────────────────
+    # ── Direct access ─────────────────────────────────────────────────────────
 
     def get_active_tasks(self) -> list[Task]:
         """Return all active (pending/in-progress) tasks."""
@@ -193,8 +266,8 @@ class MemoryBus:
             return []
 
     def get_stats(self) -> dict:
-        """Return memory system health stats for diagnostics."""
-        base = {
+        """Return full memory system health stats including Phase B components."""
+        base: dict = {
             "enabled": self._enabled,
             "session_id": self.working.session_id,
             "session_turns": self.working.turn_count,
@@ -206,16 +279,30 @@ class MemoryBus:
                 base.update(self.episode_store.get_stats())
             except Exception:
                 pass
+            # Phase B stats
+            try:
+                base["knowledge_graph"] = self.graph.stats()
+            except Exception:
+                base["knowledge_graph"] = {}
+            try:
+                base["intent_cache"] = self.intent_classifier.get_cache_stats()
+            except Exception:
+                pass
+            try:
+                last_decay = self.decay_engine.get_last_report()
+                if last_decay:
+                    base["last_decay_pass"] = last_decay
+            except Exception:
+                pass
         return base
 
     def search(self, query: str, limit: int = 10) -> list[Memory]:
-        """Direct memory search — used for introspection commands."""
+        """Direct memory search for introspection commands."""
         if not self._enabled:
             return []
         try:
             ctx = self.retriever.retrieve(query)
-            all_memories = ctx.facts + ctx.preferences
-            return all_memories[:limit]
+            return (ctx.facts + ctx.preferences)[:limit]
         except Exception:
             return []
 
@@ -229,6 +316,52 @@ class MemoryBus:
             return True
         except Exception:
             return False
+
+    # ── Phase B additions ─────────────────────────────────────────────────────
+
+    def get_entity_context(self, entity_name: str) -> str:
+        """
+        Return a formatted entity card from the Knowledge Graph.
+        Useful for tool calls or explicit "tell me about X" queries.
+        """
+        if not self._enabled or not self.graph.is_available():
+            return ""
+        try:
+            return self.graph.get_subgraph_context(entity_name)
+        except Exception:
+            return ""
+
+    def get_conflict_report(self) -> list[dict]:
+        """Return all pending memory conflicts."""
+        if not self._enabled:
+            return []
+        try:
+            return self.episode_store.get_pending_conflicts()
+        except Exception:
+            return []
+
+    def run_decay_now(self) -> dict:
+        """
+        Manually trigger a decay pass (Boss command: 'run memory decay').
+        Returns the DecayReport as a dict.
+        """
+        if not self._enabled:
+            return {"enabled": False}
+        try:
+            report = self.decay_engine.run_decay_pass()
+            return report.to_dict()
+        except Exception as e:
+            return {"error": str(e)}
+
+    def shutdown(self) -> None:
+        """
+        Clean shutdown — stops the APScheduler gracefully.
+        Call from FridayBrain.__del__ or app shutdown handler.
+        """
+        try:
+            self.decay_engine.stop_scheduler()
+        except Exception:
+            pass
 
     # ── Internal ──────────────────────────────────────────────────────────────
 
@@ -245,24 +378,41 @@ class MemoryBus:
             self._current_episode_id = str(uuid.uuid4())
 
     def _persist_extraction(self, result: ExtractionResult) -> None:
-        """Save extracted memories and tasks to all storage tiers."""
-        memories_to_upsert: list[Memory] = []
+        """
+        Save extracted memories and tasks across all storage tiers.
 
+        Phase B: after saving, run EntityLinker and ConflictDetector.
+        """
+        memories_saved: list[Memory] = []
+
+        # Tier 1: SQLite
         for memory in result.memories:
-            # Skip empty content
             if not memory.content.strip():
                 continue
             try:
-                # Tier 1: SQLite
                 self.episode_store.save_memory(memory)
-                memories_to_upsert.append(memory)
+                memories_saved.append(memory)
             except Exception:
                 pass
 
-        # Tier 2a: ChromaDB (batch for efficiency)
-        if memories_to_upsert and self.vector_store.is_available():
+        # Tier 2a: ChromaDB (batch)
+        if memories_saved and self.vector_store.is_available():
             try:
-                self.vector_store.upsert_many(memories_to_upsert)
+                self.vector_store.upsert_many(memories_saved)
+            except Exception:
+                pass
+
+        # Tier 2b: Knowledge Graph — EntityLinker (Phase B)
+        if memories_saved and self.graph.is_available():
+            try:
+                self.entity_linker.link(memories_saved, self.graph)
+            except Exception:
+                pass
+
+        # Conflict detection (Phase B) — silent, best-effort
+        if memories_saved:
+            try:
+                self.conflict_detector.scan(memories_saved)
             except Exception:
                 pass
 

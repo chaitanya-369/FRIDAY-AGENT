@@ -29,17 +29,23 @@ class Settings(BaseSettings):
     openai_api_key: str = ""
     deepseek_api_key: str = ""
 
-    # ── Memory System ─────────────────────────────────────────────────────────
+    # ── Memory System (Phase A) ──────────────────────────────────────────────
     chromadb_path: str = "data/vectors"  # path to ChromaDB persistent store
     memory_extraction_model: str = (
-        "claude-haiku-4-5-20251001"  # cheap model for extraction
+        "claude-haiku-4-5-20251001"  # cheap model for extraction + conflict judge
     )
     memory_context_token_budget: int = 1200  # max tokens to inject into system prompt
     memory_max_facts: int = 5  # max fact memories to inject per turn
     memory_max_preferences: int = 5  # max preference memories to inject
     memory_max_tasks: int = 5  # max active tasks to inject
-    memory_decay_interval_hours: int = 24  # how often decay engine runs
     memory_enabled: bool = True  # master switch
+
+    # ── Memory System (Phase B) ──────────────────────────────────────────────
+    memory_decay_interval_hours: float = 24.0  # how often DecayEngine runs (hours)
+    memory_conflict_similarity_threshold: float = 0.82  # cosine sim for conflict check
+    memory_intent_classifier_enabled: bool = True  # use LLM for intent (vs keywords)
+    memory_kg_max_nodes: int = 500  # KG node limit before pruning low-degree nodes
+    memory_conflict_max_checks: int = 8  # max LLM judge calls per extraction batch
 
     # ── Server ────────────────────────────────────────────────────────────────
     environment: str = "development"

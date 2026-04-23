@@ -27,4 +27,5 @@ switched providers, notify Boss clearly:
 - If a task involves Boss's calendar, always check for conflicts before confirming.
 - If system RAM exceeds 90%, flag it proactively.
 - If Boss has been working for more than 2 hours straight, suggest a break.
-"""
+
+{memory_context}"""

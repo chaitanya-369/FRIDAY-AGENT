@@ -36,6 +36,7 @@ from friday.llm.switch_parser import (
     DiagnosticsIntent,
 )
 from friday.llm.adapters.base import StreamChunk
+from friday.memory import MemoryBus
 from friday.tools.router import ToolRouter
 
 # ── Observability setup ───────────────────────────────────────────────────────
@@ -56,23 +57,27 @@ class FridayBrain:
 
     On every turn:
       1. SwitchCommandParser intercepts model-switch commands first.
-      2. ActiveModelSession provides the current (provider, model).
-      3. SmartHistoryBridge converts history if provider changed.
-      4. LLMRouter streams the response.
-      5. OfflineGuardian handles LLMExhaustedError gracefully.
+      2. MemoryBus retrieves ranked context for system prompt injection.
+      3. ActiveModelSession provides the current (provider, model).
+      4. SmartHistoryBridge converts history if provider changed.
+      5. LLMRouter streams the response.
+      6. MemoryBus buffers the completed turn for async consolidation.
+      7. OfflineGuardian handles LLMExhaustedError gracefully.
     """
 
     def __init__(self):
         create_db_and_tables()
         self.llm = LLMRouter()
         self.tool_router = ToolRouter()
+        self.memory = MemoryBus()  # ← Memory Mesh
         self.conversation_history: List[Dict[str, Any]] = []
         self._current_provider: str = settings.default_provider
+        self._last_user_input: str = ""  # buffered for memory observation
 
     # ── System prompt ─────────────────────────────────────────────────────────
 
-    def _get_system_prompt(self) -> str:
-        """Build the FRIDAY persona prompt with live timestamp and session context."""
+    def _get_system_prompt(self, memory_context: str = "") -> str:
+        """Build the FRIDAY persona prompt with live timestamp, session, and memory context."""
         state = active_session.get_state()
         return FRIDAY_SYSTEM_PROMPT.format(
             timestamp=datetime.now().isoformat(),
@@ -81,6 +86,7 @@ class FridayBrain:
             active_model=state.get("model_id", "unknown"),
             set_by=state.get("set_by", "system"),
             switched_at=state.get("switched_at", "unknown"),
+            memory_context=memory_context,
         )
 
     # ── History management ────────────────────────────────────────────────────
@@ -458,10 +464,13 @@ class FridayBrain:
 
         Pipeline:
           1. SwitchCommandParser — intercept model-switch commands first.
-          2. Sync (provider, model) from ActiveModelSession + bridge history.
-          3. LLMRouter.stream() — with explicit provider + model.
-          4. Tool execution loop.
-          5. OfflineGuardian on LLMExhaustedError.
+          2. MemoryBus.get_context_for() — retrieve ranked memory context.
+          3. Sync (provider, model) from ActiveModelSession + bridge history.
+          4. LLMRouter.stream() — memory context injected into system prompt.
+          5. Tool execution loop.
+          6. MemoryBus.observe_turn() — buffer turn for async extraction.
+          7. MemoryBus.consolidate_session_async() — every 5 user turns.
+          8. OfflineGuardian on LLMExhaustedError.
 
         Args:
             user_input: Raw text from the user (or empty string on tool-loop re-entry).
@@ -503,26 +512,38 @@ class FridayBrain:
                 yield from self._handle_diagnostics_intent()
                 return
 
-            # Not a switch command — fall through to LLM
+            # Not a switch command — buffer and fall through to LLM
+            self._last_user_input = user_input
             self._update_history("user", user_input)
 
-        # ── 2. Resolve active session + bridge history ──────────────────────
+        # ── 2. Memory context retrieval (fast — pre-ranked, < 200ms) ────────
+        memory_context_str = ""
+        if user_input and settings.memory_enabled:
+            try:
+                mem_ctx = self.memory.get_context_for(user_input)
+                memory_context_str = mem_ctx.to_prompt_string()
+            except Exception:
+                pass  # Memory failure must never block the response
+
+        # ── 3. Resolve active session + bridge history ──────────────────────
         active_provider, active_model = self._sync_provider_from_session()
 
-        # ── 3. LLM streaming with tool loop ────────────────────────────────
+        # ── 4. LLM streaming with memory-enriched system prompt ─────────────
         tool_schemas = self.tool_router.get_unified_schemas()
 
         try:
             final_chunk: StreamChunk | None = None
+            response_parts: list[str] = []  # accumulate for memory observation
 
             for chunk in self.llm.stream(
                 messages=self.conversation_history,
-                system_prompt=self._get_system_prompt(),
+                system_prompt=self._get_system_prompt(memory_context_str),
                 provider_name=active_provider,
                 model=active_model,
                 tool_schemas=tool_schemas,
             ):
                 if chunk.text:
+                    response_parts.append(chunk.text)
                     yield chunk.text
                 if chunk.is_final:
                     final_chunk = chunk
@@ -544,7 +565,7 @@ class FridayBrain:
                 yield from self.stream_process("")
 
             else:
-                # Normal end — persist full response
+                # Normal end — persist full response to LLM history
                 content = (
                     final_chunk.raw_assistant_content
                     if final_chunk.raw_assistant_content is not None
@@ -552,10 +573,18 @@ class FridayBrain:
                 )
                 self._update_history("assistant", content)
 
+                # ── 5. Memory observation (non-blocking) ─────────────────────
+                if self._last_user_input and settings.memory_enabled:
+                    assistant_text = "".join(response_parts)
+                    self.memory.observe_turn(self._last_user_input, assistant_text)
+                    self._last_user_input = ""
+
+                    # ── 6. Async consolidation every 5 user turns ─────────────
+                    if self.memory.working.should_consolidate():
+                        self.memory.consolidate_session_async(self.conversation_history)
+
         except LLMExhaustedError as e:
-            # ── 4. Auto-switch notification + OfflineGuardian ─────────────
-            # Notify the session about the hard failure so it can auto-switch
-            # if the session was NOT explicitly set by the user.
+            # ── 7. Auto-switch notification + OfflineGuardian ─────────────
             fallback_provider = settings.default_provider
             fallback_model = settings.default_model
             active_session.notify_hard_failure(

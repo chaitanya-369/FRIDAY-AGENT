@@ -29,6 +29,18 @@ class Settings(BaseSettings):
     openai_api_key: str = ""
     deepseek_api_key: str = ""
 
+    # ── Memory System ─────────────────────────────────────────────────────────
+    chromadb_path: str = "data/vectors"  # path to ChromaDB persistent store
+    memory_extraction_model: str = (
+        "claude-haiku-4-5-20251001"  # cheap model for extraction
+    )
+    memory_context_token_budget: int = 1200  # max tokens to inject into system prompt
+    memory_max_facts: int = 5  # max fact memories to inject per turn
+    memory_max_preferences: int = 5  # max preference memories to inject
+    memory_max_tasks: int = 5  # max active tasks to inject
+    memory_decay_interval_hours: int = 24  # how often decay engine runs
+    memory_enabled: bool = True  # master switch
+
     # ── Server ────────────────────────────────────────────────────────────────
     environment: str = "development"
     port: int = 8000

@@ -164,6 +164,9 @@ database.db
 database.db-shm
 database.db-wal
 
+# Memory data — personal data, never commit
+data/
+
 # Temporary / Scratch
 scratch/
 graphify-out/cache/

@@ -7,10 +7,22 @@ tasks:
       - task: backend
       - task: frontend
 
+  full:
+    desc: "Run all FRIDAY services (backend + frontend + Slack bot)"
+    cmds:
+      - task: backend
+      - task: frontend
+      - task: slack
+
+  slack:
+    desc: "Start the FRIDAY Slack Socket Mode bot"
+    cmds:
+      - ./venv/Scripts/python -m friday.interfaces.slack_bot
+
   backend:
     desc: "Start the FastAPI backend"
     cmds:
-      - ./venv/Scripts/python -m uvicorn friday.core.brain:app --reload
+      - ./venv/Scripts/python -m uvicorn friday.api.server:app --reload
 
   frontend:
     desc: "Start the React/Vite dashboard"

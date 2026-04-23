@@ -158,3 +158,13 @@ cython_debug/
 # Project specific
 .agent/
 .cursor/
+
+# FRIDAY — database contains plaintext API keys, never commit
+database.db
+database.db-shm
+database.db-wal
+
+# Temporary / Scratch
+scratch/
+graphify-out/cache/
+test_tools.py

@@ -169,7 +169,7 @@ data/
 
 # Temporary / Scratch
 scratch/
-graphify-out/cache/
+graphify-out/
 test_tools.py
 audio_check.py
 test_voice_local.py

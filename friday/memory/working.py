@@ -61,6 +61,9 @@ class WorkingMemory:
         # Populated by the retrieval engine between turns
         self._memory_candidates: list = []
 
+        # Phase C: Preloaded context for upcoming events/tasks
+        self.preloaded_context: Optional[Any] = None
+
     # ── Conversation buffer ───────────────────────────────────────────────────
 
     def add_turn(

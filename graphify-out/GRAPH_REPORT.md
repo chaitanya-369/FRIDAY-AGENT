@@ -1,12 +1,12 @@
-# Graph Report - D:\PROJECTS\FRIDAY-AGENT  (2026-04-23)
+# Graph Report - D:\PROJECTS\FRIDAY-AGENT  (2026-04-24)
 
 ## Corpus Check
-- 85 files · ~182,826 words
+- 99 files · ~211,683 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1123 nodes · 4036 edges · 110 communities detected
-- Extraction: 25% EXTRACTED · 75% INFERRED · 0% AMBIGUOUS · INFERRED: 3026 edges (avg confidence: 0.54)
+- 1305 nodes · 5069 edges · 122 communities detected
+- Extraction: 23% EXTRACTED · 77% INFERRED · 0% AMBIGUOUS · INFERRED: 3922 edges (avg confidence: 0.54)
 - Token cost: 0 input · 0 output
 
 ## Community Hubs (Navigation)
@@ -120,95 +120,107 @@
 - [[_COMMUNITY_Community 107|Community 107]]
 - [[_COMMUNITY_Community 108|Community 108]]
 - [[_COMMUNITY_Community 109|Community 109]]
+- [[_COMMUNITY_Community 110|Community 110]]
+- [[_COMMUNITY_Community 111|Community 111]]
+- [[_COMMUNITY_Community 112|Community 112]]
+- [[_COMMUNITY_Community 113|Community 113]]
+- [[_COMMUNITY_Community 114|Community 114]]
+- [[_COMMUNITY_Community 115|Community 115]]
+- [[_COMMUNITY_Community 116|Community 116]]
+- [[_COMMUNITY_Community 117|Community 117]]
+- [[_COMMUNITY_Community 118|Community 118]]
+- [[_COMMUNITY_Community 119|Community 119]]
+- [[_COMMUNITY_Community 120|Community 120]]
+- [[_COMMUNITY_Community 121|Community 121]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `LLMProvider` - 193 edges
-2. `Memory` - 165 edges
-3. `APIKey` - 136 edges
-4. `MemoryType` - 123 edges
-5. `Task` - 112 edges
-6. `ModelCatalog` - 111 edges
-7. `StreamChunk` - 94 edges
-8. `EpisodeStore` - 92 edges
-9. `MemorySource` - 85 edges
-10. `ModelEntry` - 81 edges
+1. `LLMProvider` - 207 edges
+2. `Memory` - 195 edges
+3. `APIKey` - 150 edges
+4. `Task` - 138 edges
+5. `MemoryType` - 132 edges
+6. `ModelCatalog` - 125 edges
+7. `MemorySource` - 114 edges
+8. `EpisodeStore` - 112 edges
+9. `StreamChunk` - 108 edges
+10. `ModelEntry` - 95 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Stream the response from FRIDAY's brain via Server-Sent Events (SSE).` --uses--> `FridayBrain`  [INFERRED]
   D:\PROJECTS\FRIDAY-AGENT\friday\api\routes\chat.py → D:\PROJECTS\FRIDAY-AGENT\friday\core\brain.py
 - `Persist field updates to an APIKey row.` --uses--> `APIKey`  [INFERRED]
   D:\PROJECTS\FRIDAY-AGENT\friday\llm\key_pool.py → D:\PROJECTS\FRIDAY-AGENT\friday\llm\models\db_models.py
-- `AnthropicAdapter` --uses--> `Return cache hit rate stats.`  [INFERRED]
-  D:\PROJECTS\FRIDAY-AGENT\friday\llm\adapters\anthropic_adapter.py → D:\PROJECTS\FRIDAY-AGENT\friday\memory\retrieval\intent.py
+- `Return cache hit rate stats.` --uses--> `AnthropicAdapter`  [INFERRED]
+  D:\PROJECTS\FRIDAY-AGENT\friday\memory\retrieval\intent.py → D:\PROJECTS\FRIDAY-AGENT\friday\llm\adapters\anthropic_adapter.py
 - `StreamChunk` --uses--> `Streams responses from DeepSeek models (deepseek-chat, deepseek-reasoner).`  [INFERRED]
   D:\PROJECTS\FRIDAY-AGENT\friday\llm\adapters\base.py → D:\PROJECTS\FRIDAY-AGENT\friday\llm\adapters\deepseek_adapter.py
-- `Emit SQL to stdout without a live DB connection.` --uses--> `ActiveSession`  [INFERRED]
-  D:\PROJECTS\FRIDAY-AGENT\alembic\env.py → D:\PROJECTS\FRIDAY-AGENT\friday\llm\models\db_models.py
+- `Memory` --uses--> `Remove a memory from the vector index.`  [INFERRED]
+  D:\PROJECTS\FRIDAY-AGENT\friday\memory\types.py → D:\PROJECTS\FRIDAY-AGENT\friday\memory\vector_store.py
 
 ## Communities
 
 ### Community 0 - "Community 0"
 Cohesion: 0.04
-Nodes (145): ConflictDetector, Post-extraction conflict scanner.      Injected into MemoryBus._persist_extracti, DecayEngine, DecayReport, friday/memory/decay.py  DecayEngine — Phase B intelligence component.  Applies t, Applies Ebbinghaus forgetting curve decay to all memories.      Usage (via Memor, Start an APScheduler background job to run decay passes automatically., Gracefully stop the APScheduler. (+137 more)
+Nodes (207): A single unit yielded by BaseAdapter.stream().      Text chunks arrive increment, StreamChunk, friday/core/brain.py  FRIDAY's core intelligence — now powered by the Omni-LLM l, Persist a tool result into history in the correct format for the         active, Append a message to history, keeping the sliding window at 40., Bridge history from the current provider format to the new provider format,, Bridge history from the current provider format to the new provider format,, Read the active (provider, model) from the session, bridge history         if ne (+199 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.04
-Nodes (187): A single unit yielded by BaseAdapter.stream().      Text chunks arrive increment, StreamChunk, friday/core/brain.py  FRIDAY's core intelligence — now powered by the Omni-LLM l, Persist a tool result into history in the correct format for the         active, Bridge history from the current provider format to the new provider format,, Read the active (provider, model) from the session, bridge history         if ne, Process user input and stream the response token-by-token.          Handles the, Read the active (provider, model) from the session, bridge history         if ne (+179 more)
+Cohesion: 0.02
+Nodes (126): FridayBrain, Stream the response from FRIDAY's brain., count_lines(), ActiveSession, Prepend a new entry to switch_history, keeping only the latest 10.         Mutat, Single-row table (always id=1) that persists FRIDAY's currently active     LLM s, Deserialize switch_history JSON into a list of dicts., Apply the Ebbinghaus forgetting curve to a single memory.          Returns: (new (+118 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.02
-Nodes (124): FridayBrain, Stream the response from FRIDAY's brain., count_lines(), ActiveSession, Prepend a new entry to switch_history, keeping only the latest 10.         Mutat, Single-row table (always id=1) that persists FRIDAY's currently active     LLM s, Deserialize switch_history JSON into a list of dicts., _block_attr() (+116 more)
+Cohesion: 0.07
+Nodes (119): ConflictDetector, Post-extraction conflict scanner.      Injected into MemoryBus._persist_extracti, DecayEngine, Applies Ebbinghaus forgetting curve decay to all memories.      Usage (via Memor, Gracefully stop the APScheduler., classify_intent(), QueryIntent, friday/memory/retrieval/engine.py  RetrievalEngine — multi-modal memory retrieva (+111 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.04
-Nodes (62): ABC, AnthropicAdapter, friday/llm/adapters/anthropic_adapter.py  Adapter for Anthropic's Claude models., Streams responses from Anthropic Claude models.      Tool calling uses Anthropic, Streams responses from Anthropic Claude models.      Tool calling uses Anthropic, BaseAdapter, format_tool(), friday/llm/adapters/base.py  Core abstractions for the Omni-LLM adapter layer. (+54 more)
+Cohesion: 0.06
+Nodes (99): friday/core/database.py  SQLite engine and table creation for FRIDAY-AGENT.  IMP, DecayReport, friday/memory/decay.py  DecayEngine — Phase B intelligence component.  Applies t, Wrapper for scheduled calls — catches all exceptions., Run a full decay pass over all memories due for review.          A memory is 'du, Summary of a completed decay pass., Enum, friday/memory/episodic.py  EpisodeStore — Tier 1 of the FRIDAY Memory Mesh.  SQL (+91 more)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.11
-Nodes (53): Apply automatic resolution policy based on verdict.          SUPERSESSION → soft, Enum, run_migrations_offline(), run_migrations_online(), friday/memory/episodic.py  EpisodeStore — Tier 1 of the FRIDAY Memory Mesh.  SQL, Retrieve a memory by ID, bumping access stats., Fetch top memories of a given type, ordered by effective score., Fetch memories created or accessed in the last N hours. (+45 more)
+Cohesion: 0.04
+Nodes (66): ABC, AnthropicAdapter, friday/llm/adapters/anthropic_adapter.py  Adapter for Anthropic's Claude models., Streams responses from Anthropic Claude models.      Tool calling uses Anthropic, Streams responses from Anthropic Claude models.      Tool calling uses Anthropic, BaseAdapter, format_tool(), friday/llm/adapters/base.py  Core abstractions for the Omni-LLM adapter layer. (+58 more)
 
 ### Community 5 - "Community 5"
-Cohesion: 0.13
-Nodes (42): BaseModel, chat_endpoint(), ChatRequest, Stream the response from FRIDAY's brain via Server-Sent Events (SSE)., list_keys(), friday/api/routes/keys.py  REST endpoints for managing API keys. Supports multip, Send a minimal test request to validate the key works right now., Send a minimal test request to validate the key works right now. (+34 more)
+Cohesion: 0.05
+Nodes (34): AudioIO, Enqueue PCM data to be played on the speaker., Immediately clear the output queue (e.g., on interrupt)., Immediately clear the input queue to drop stale audio frames., Manages PyAudio streams for input (mic) and output (speaker).     Provides queue, Start an APScheduler background job to run decay passes automatically., Exception, The orchestrator for the FRIDAY Voice Pipeline.     Manages State Machine: STAND (+26 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.11
-Nodes (22): _infer_entity_type(), _infer_relation_type(), friday/memory/graph.py  KnowledgeGraph — Tier 2b of the FRIDAY Memory Mesh.  A N, Add or update an entity node in the graph and SQLite.          Returns the Entit, Retrieve an entity by name from SQLite., Add or strengthen a typed relationship between two entities.          If a relat, Return entity names reachable within `depth` hops., Generate a formatted entity card for injection into the LLM prompt.          Exa (+14 more)
+Cohesion: 0.07
+Nodes (30): Return the result of the last decay pass as a dict., _infer_entity_type(), _infer_relation_type(), friday/memory/extraction/entity_linker.py  EntityLinker — post-extraction step t, Infer entity type from name and surrounding context., Infer the canonical relationship type from memory content., Process all entity names in the given memories and upsert them         into the, Create a typed relationship edge for a RELATIONSHIP-type memory. (+22 more)
 
 ### Community 7 - "Community 7"
-Cohesion: 0.09
-Nodes (19): BaseTool, Abstract base class for all FRIDAY tools., BaseTool, Manages the registration and execution of tools.     Also handles converting too, Registers the built-in FRIDAY tools., Registers the built-in FRIDAY tools., Returns tool schemas in Anthropic's format., Returns tool schemas in Anthropic's format. (+11 more)
+Cohesion: 0.12
+Nodes (46): BaseModel, chat_endpoint(), ChatRequest, Stream the response from FRIDAY's brain via Server-Sent Events (SSE)., add_key(), key_health(), list_keys(), _mask() (+38 more)
 
 ### Community 8 - "Community 8"
-Cohesion: 0.07
-Nodes (27): _is_false_positive(), _normalise(), Parses natural language model-switch commands.      Call parse(user_input) → ret, Call this if providers/models change at runtime., Apply all switch patterns to the text. Return the raw captured         target st, Parse a user message for model-switch intent.          Returns:           Switch, Look up display name for a known (provider, model_id) pair., Given text like "list groq models", extract the provider name.         Returns N (+19 more)
+Cohesion: 0.08
+Nodes (22): BaseTool, Abstract base class for all FRIDAY tools., BaseTool, Tool to forget/delete a memory., Tool to update an existing memory., Tool to search FRIDAY's memory mesh., Manages the registration and execution of tools.     Also handles converting too, Registers the built-in FRIDAY tools. (+14 more)
 
 ### Community 9 - "Community 9"
-Cohesion: 0.13
-Nodes (26): Exception, OfflineGuardian, OllamaNotAvailable, guardian(), tests/test_offline_guardian.py  Unit tests for friday/llm/offline_guardian.py —, If no preferred model is available, use the first one., Empty user_input (tool re-entry loop) should not crash., Empty user_input (tool re-entry loop) should not crash. (+18 more)
+Cohesion: 0.07
+Nodes (29): _is_false_positive(), _normalise(), Parses natural language model-switch commands.      Call parse(user_input) → ret, Call this if providers/models change at runtime., Find all catalog entries whose model_id or display_name fuzzy-matches         th, Apply all switch patterns to the text. Return the raw captured         target st, Parse a user message for model-switch intent.          Returns:           Switch, Look up display name for a known (provider, model_id) pair. (+21 more)
 
 ### Community 10 - "Community 10"
-Cohesion: 0.33
-Nodes (5): downgrade(), add_active_session_table  Revision ID: 7b923705ea41 Revises: Create Date: 2026-0, Add the active_session singleton table., Drop the active_session table., upgrade()
+Cohesion: 0.14
+Nodes (25): OfflineGuardian, OllamaNotAvailable, guardian(), tests/test_offline_guardian.py  Unit tests for friday/llm/offline_guardian.py —, If no preferred model is available, use the first one., Empty user_input (tool re-entry loop) should not crash., Empty user_input (tool re-entry loop) should not crash., When Ollama probe fails, deterministic response is returned. (+17 more)
 
 ### Community 11 - "Community 11"
 Cohesion: 0.33
-Nodes (3): create_db_and_tables(), friday/core/database.py  SQLite engine and table creation for FRIDAY-AGENT.  IMP, Create all tables and seed providers/keys/models from .env (idempotent).
+Nodes (5): downgrade(), add_active_session_table  Revision ID: 7b923705ea41 Revises: Create Date: 2026-0, Add the active_session singleton table., Drop the active_session table., upgrade()
 
 ### Community 12 - "Community 12"
-Cohesion: 0.33
-Nodes (4): ConversationTurn, _generate_session_id(), friday/memory/working.py  WorkingMemory — Tier 0 of the FRIDAY Memory Mesh.  Liv, A single turn in the current conversation.
-
-### Community 13 - "Community 13"
 Cohesion: 0.5
 Nodes (3): BaseSettings, friday/config/settings.py  Pydantic Settings for FRIDAY-AGENT.  LLM provider/mod, Settings
 
-### Community 14 - "Community 14"
+### Community 13 - "Community 13"
 Cohesion: 0.5
 Nodes (0): 
 
-### Community 15 - "Community 15"
+### Community 14 - "Community 14"
 Cohesion: 0.67
+Nodes (0): 
+
+### Community 15 - "Community 15"
+Cohesion: 1.0
 Nodes (0): 
 
 ### Community 16 - "Community 16"
@@ -353,243 +365,293 @@ Nodes (0):
 
 ### Community 51 - "Community 51"
 Cohesion: 1.0
-Nodes (1): Persistent store for a single typed memory unit.      confidence, stability, and
+Nodes (1): Add a turn to the conversation buffer.
 
 ### Community 52 - "Community 52"
 Cohesion: 1.0
-Nodes (1): Structured actionable task extracted from conversation.
+Nodes (1): Return all buffered turns in chronological order.
 
 ### Community 53 - "Community 53"
 Cohesion: 1.0
-Nodes (1): A complete conversation session.      raw_turns_json is the full conversation lo
+Nodes (1): Return the most recent n turns.
 
 ### Community 54 - "Community 54"
 Cohesion: 1.0
-Nodes (1): A named entity node in the knowledge graph.
+Nodes (1): Return conversation history in the format expected by FridayBrain         (list
 
 ### Community 55 - "Community 55"
 Cohesion: 1.0
-Nodes (1): A typed, weighted, temporal edge between two entity nodes.      Relation type ex
+Nodes (1): Clear the conversation buffer (e.g., on explicit /reset).
 
 ### Community 56 - "Community 56"
 Cohesion: 1.0
-Nodes (1): A detected contradiction between two memories, pending resolution.      conflict
+Nodes (1): Store a session-local fact.
 
 ### Community 57 - "Community 57"
 Cohesion: 1.0
-Nodes (1): The type of a memory unit.      Each type has different:       - decay rate
+Nodes (1): Retrieve a session-local fact.
 
 ### Community 58 - "Community 58"
 Cohesion: 1.0
-Nodes (1): Where did this memory originate?
+Nodes (1): Remove a session-local fact.
 
 ### Community 59 - "Community 59"
 Cohesion: 1.0
-Nodes (1): A single typed unit of FRIDAY's long-term memory.      Scoring dimensions:
+Nodes (1): Cache pre-loaded memory candidates for fast context injection.
 
 ### Community 60 - "Community 60"
 Cohesion: 1.0
-Nodes (1): Composite score used for retrieval ranking.          Weights:           40% conf
+Nodes (1): Retrieve the pre-loaded memory candidate cache.
 
 ### Community 61 - "Community 61"
 Cohesion: 1.0
-Nodes (1): A structured, actionable task extracted from conversation.
+Nodes (1): Return True if the session is long enough to warrant consolidation.         Cons
 
 ### Community 62 - "Community 62"
 Cohesion: 1.0
-Nodes (1): A complete conversation session.      Raw turns are stored for archive/audit. Th
+Nodes (1): Return how long this session has been active.
 
 ### Community 63 - "Community 63"
 Cohesion: 1.0
-Nodes (1): A named entity in the knowledge graph (person, project, tool, concept).
+Nodes (1): Return a JSON-serialisable snapshot for archiving.
 
 ### Community 64 - "Community 64"
 Cohesion: 1.0
-Nodes (1): The assembled, ranked, deduplicated memory context ready for     injection into
+Nodes (1): Persistent store for a single typed memory unit.      confidence, stability, and
 
 ### Community 65 - "Community 65"
 Cohesion: 1.0
-Nodes (1): Format the context for injection into the FRIDAY system prompt.         Returns
+Nodes (1): Structured actionable task extracted from conversation.
 
 ### Community 66 - "Community 66"
 Cohesion: 1.0
-Nodes (1): Create all tables and seed providers/keys/models from .env (idempotent).
+Nodes (1): A complete conversation session.      raw_turns_json is the full conversation lo
 
 ### Community 67 - "Community 67"
 Cohesion: 1.0
-Nodes (1): Add the active_session singleton table.
+Nodes (1): A named entity node in the knowledge graph.
 
 ### Community 68 - "Community 68"
 Cohesion: 1.0
-Nodes (1): Drop the active_session table.
+Nodes (1): A typed, weighted, temporal edge between two entity nodes.      Relation type ex
 
 ### Community 69 - "Community 69"
 Cohesion: 1.0
-Nodes (1): Reset the active session to settings defaults (default_provider / default_model)
+Nodes (1): A detected contradiction between two memories, pending resolution.      conflict
 
 ### Community 70 - "Community 70"
 Cohesion: 1.0
-Nodes (1): Create all tables and seed providers/keys/models from .env (idempotent).
+Nodes (1): The type of a memory unit.      Each type has different:       - decay rate
 
 ### Community 71 - "Community 71"
 Cohesion: 1.0
-Nodes (0): 
+Nodes (1): Where did this memory originate?
 
 ### Community 72 - "Community 72"
 Cohesion: 1.0
-Nodes (1): Converts conversation history between Anthropic and OpenAI-compatible formats.
+Nodes (1): A single typed unit of FRIDAY's long-term memory.      Scoring dimensions:
 
 ### Community 73 - "Community 73"
 Cohesion: 1.0
-Nodes (1): Convert a conversation history list from one provider's format to another.
+Nodes (1): Composite score used for retrieval ranking.          Weights:           40% conf
 
 ### Community 74 - "Community 74"
 Cohesion: 1.0
-Nodes (1): Return 'anthropic' or 'openai' based on provider name.
+Nodes (1): A structured, actionable task extracted from conversation.
 
 ### Community 75 - "Community 75"
 Cohesion: 1.0
-Nodes (1): Convert Anthropic-format history to OpenAI-compat format.          Anthropic his
+Nodes (1): A complete conversation session.      Raw turns are stored for archive/audit. Th
 
 ### Community 76 - "Community 76"
 Cohesion: 1.0
-Nodes (1): Convert Anthropic user-role content blocks to OpenAI messages.         Tool resu
+Nodes (1): A named entity in the knowledge graph (person, project, tool, concept).
 
 ### Community 77 - "Community 77"
 Cohesion: 1.0
-Nodes (1): Convert Anthropic assistant content blocks to a single OpenAI assistant message.
+Nodes (1): The assembled, ranked, deduplicated memory context ready for     injection into
 
 ### Community 78 - "Community 78"
 Cohesion: 1.0
-Nodes (1): Convert OpenAI-compat format history to Anthropic format.          OpenAI histor
+Nodes (1): Format the context for injection into the FRIDAY system prompt.         Returns
 
 ### Community 79 - "Community 79"
 Cohesion: 1.0
-Nodes (1): Extract the 'type' from a block (dict or object).
+Nodes (1): Create all tables and seed providers/keys/models from .env (idempotent).
 
 ### Community 80 - "Community 80"
 Cohesion: 1.0
-Nodes (1): Extract text content from a text block.
+Nodes (1): Add the active_session singleton table.
 
 ### Community 81 - "Community 81"
 Cohesion: 1.0
-Nodes (1): Extract an arbitrary attribute from a block (dict or object).
+Nodes (1): Drop the active_session table.
 
 ### Community 82 - "Community 82"
 Cohesion: 1.0
-Nodes (1): Ensure content is a list (wraps single blocks).
+Nodes (1): Reset the active session to settings defaults (default_provider / default_model)
 
 ### Community 83 - "Community 83"
 Cohesion: 1.0
-Nodes (1): A tool invocation parsed from an LLM response.      Attributes:         id   : P
+Nodes (1): Create all tables and seed providers/keys/models from .env (idempotent).
 
 ### Community 84 - "Community 84"
 Cohesion: 1.0
-Nodes (1): A single unit yielded by BaseAdapter.stream().      Text chunks arrive increment
+Nodes (0): 
 
 ### Community 85 - "Community 85"
 Cohesion: 1.0
-Nodes (1): Abstract base class for all LLM provider adapters.      Each concrete adapter ha
+Nodes (1): Converts conversation history between Anthropic and OpenAI-compatible formats.
 
 ### Community 86 - "Community 86"
 Cohesion: 1.0
-Nodes (1): Stream one LLM turn.          Args:             messages      : Conversation his
+Nodes (1): Convert a conversation history list from one provider's format to another.
 
 ### Community 87 - "Community 87"
 Cohesion: 1.0
-Nodes (1): Convert a unified tool definition to this provider's native schema.          Arg
+Nodes (1): Return 'anthropic' or 'openai' based on provider name.
 
 ### Community 88 - "Community 88"
 Cohesion: 1.0
-Nodes (1): Convert a list of unified tool schemas to provider-native format.          Args:
+Nodes (1): Convert Anthropic-format history to OpenAI-compat format.          Anthropic his
 
 ### Community 89 - "Community 89"
 Cohesion: 1.0
-Nodes (1): A registered LLM provider.
+Nodes (1): Convert Anthropic user-role content blocks to OpenAI messages.         Tool resu
 
 ### Community 90 - "Community 90"
 Cohesion: 1.0
-Nodes (1): An API key belonging to a provider. Multiple keys per provider are allowed.
+Nodes (1): Convert Anthropic assistant content blocks to a single OpenAI assistant message.
 
 ### Community 91 - "Community 91"
 Cohesion: 1.0
-Nodes (1): A known model for a given provider.
+Nodes (1): Convert OpenAI-compat format history to Anthropic format.          OpenAI histor
 
 ### Community 92 - "Community 92"
 Cohesion: 1.0
-Nodes (1): Single-row table (always id=1) that persists FRIDAY's currently active     LLM s
+Nodes (1): Extract the 'type' from a block (dict or object).
 
 ### Community 93 - "Community 93"
 Cohesion: 1.0
-Nodes (1): Deserialize switch_history JSON into a list of dicts.
+Nodes (1): Extract text content from a text block.
 
 ### Community 94 - "Community 94"
 Cohesion: 1.0
-Nodes (1): Prepend a new entry to switch_history, keeping only the latest 10.         Mutat
+Nodes (1): Extract an arbitrary attribute from a block (dict or object).
 
 ### Community 95 - "Community 95"
 Cohesion: 1.0
-Nodes (1): Abstract base class for all FRIDAY tools.
+Nodes (1): Ensure content is a list (wraps single blocks).
 
 ### Community 96 - "Community 96"
 Cohesion: 1.0
-Nodes (1): The name of the tool (e.g., 'system_stats'). Must match ^[a-zA-Z0-9_-]{1,64}$ fo
+Nodes (1): A tool invocation parsed from an LLM response.      Attributes:         id   : P
 
 ### Community 97 - "Community 97"
 Cohesion: 1.0
-Nodes (1): The JSON schema for the tool's parameters.         Example:         {
+Nodes (1): A single unit yielded by BaseAdapter.stream().      Text chunks arrive increment
 
 ### Community 98 - "Community 98"
 Cohesion: 1.0
-Nodes (1): Executes the tool with the given arguments.         Returns a string or JSON-ser
+Nodes (1): Abstract base class for all LLM provider adapters.      Each concrete adapter ha
 
 ### Community 99 - "Community 99"
 Cohesion: 1.0
-Nodes (1): Run migrations in 'offline' mode.      This configures the context with just a U
+Nodes (1): Stream one LLM turn.          Args:             messages      : Conversation his
 
 ### Community 100 - "Community 100"
 Cohesion: 1.0
-Nodes (1): Run migrations in 'online' mode.      In this scenario we need to create an Engi
+Nodes (1): Convert a unified tool definition to this provider's native schema.          Arg
 
 ### Community 101 - "Community 101"
 Cohesion: 1.0
-Nodes (1): A registered LLM provider.
+Nodes (1): Convert a list of unified tool schemas to provider-native format.          Args:
 
 ### Community 102 - "Community 102"
 Cohesion: 1.0
-Nodes (1): An API key belonging to a provider. Multiple keys per provider are allowed.
+Nodes (1): A registered LLM provider.
 
 ### Community 103 - "Community 103"
 Cohesion: 1.0
-Nodes (1): A known model for a given provider.
+Nodes (1): An API key belonging to a provider. Multiple keys per provider are allowed.
 
 ### Community 104 - "Community 104"
 Cohesion: 1.0
-Nodes (1): Core intelligence component of the FRIDAY Agent.          This class handles t
+Nodes (1): A known model for a given provider.
 
 ### Community 105 - "Community 105"
 Cohesion: 1.0
-Nodes (1): Retrieves and formats the FRIDAY persona prompt with dynamic context.
+Nodes (1): Single-row table (always id=1) that persists FRIDAY's currently active     LLM s
 
 ### Community 106 - "Community 106"
 Cohesion: 1.0
-Nodes (1): Processes user input and streams the LLM response token by token.          Thi
+Nodes (1): Deserialize switch_history JSON into a list of dicts.
 
 ### Community 107 - "Community 107"
 Cohesion: 1.0
-Nodes (1): Retrieves and formats the FRIDAY persona prompt with dynamic context.
+Nodes (1): Prepend a new entry to switch_history, keeping only the latest 10.         Mutat
 
 ### Community 108 - "Community 108"
 Cohesion: 1.0
-Nodes (1): Processes user input and streams the LLM response token by token.
+Nodes (1): Abstract base class for all FRIDAY tools.
 
 ### Community 109 - "Community 109"
+Cohesion: 1.0
+Nodes (1): The name of the tool (e.g., 'system_stats'). Must match ^[a-zA-Z0-9_-]{1,64}$ fo
+
+### Community 110 - "Community 110"
+Cohesion: 1.0
+Nodes (1): The JSON schema for the tool's parameters.         Example:         {
+
+### Community 111 - "Community 111"
+Cohesion: 1.0
+Nodes (1): Executes the tool with the given arguments.         Returns a string or JSON-ser
+
+### Community 112 - "Community 112"
+Cohesion: 1.0
+Nodes (1): Run migrations in 'offline' mode.      This configures the context with just a U
+
+### Community 113 - "Community 113"
+Cohesion: 1.0
+Nodes (1): Run migrations in 'online' mode.      In this scenario we need to create an Engi
+
+### Community 114 - "Community 114"
+Cohesion: 1.0
+Nodes (1): A registered LLM provider.
+
+### Community 115 - "Community 115"
+Cohesion: 1.0
+Nodes (1): An API key belonging to a provider. Multiple keys per provider are allowed.
+
+### Community 116 - "Community 116"
+Cohesion: 1.0
+Nodes (1): A known model for a given provider.
+
+### Community 117 - "Community 117"
+Cohesion: 1.0
+Nodes (1): Core intelligence component of the FRIDAY Agent.          This class handles t
+
+### Community 118 - "Community 118"
+Cohesion: 1.0
+Nodes (1): Retrieves and formats the FRIDAY persona prompt with dynamic context.
+
+### Community 119 - "Community 119"
+Cohesion: 1.0
+Nodes (1): Processes user input and streams the LLM response token by token.          Thi
+
+### Community 120 - "Community 120"
+Cohesion: 1.0
+Nodes (1): Retrieves and formats the FRIDAY persona prompt with dynamic context.
+
+### Community 121 - "Community 121"
 Cohesion: 1.0
 Nodes (1): Processes the input and yields the response token by token.
 
 ## Knowledge Gaps
-- **163 isolated node(s):** `add_active_session_table  Revision ID: 7b923705ea41 Revises: Create Date: 2026-0`, `Add the active_session singleton table.`, `Drop the active_session table.`, `Startup/shutdown lifecycle — launches the Slack bot alongside the API.`, `Reset the active session to settings defaults (default_provider / default_model)` (+158 more)
+- **190 isolated node(s):** `add_active_session_table  Revision ID: 7b923705ea41 Revises: Create Date: 2026-0`, `Add the active_session singleton table.`, `Drop the active_session table.`, `Startup/shutdown lifecycle — launches the Slack bot alongside the API.`, `Reset the active session to settings defaults (default_provider / default_model)` (+185 more)
   These have ≤1 connection - possible missing edges or undocumented components.
+- **Thin community `Community 15`** (2 nodes): `audio_diag()`, `audio_check.py`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 - **Thin community `Community 16`** (2 nodes): `App.tsx`, `main.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 - **Thin community `Community 17`** (2 nodes): `OfflineIndicator.tsx`, `handleRetry()`
@@ -660,139 +722,163 @@ Nodes (1): Processes the input and yields the response token by token.
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 - **Thin community `Community 50`** (1 nodes): `install_act.ps1`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 51`** (1 nodes): `Persistent store for a single typed memory unit.      confidence, stability, and`
+- **Thin community `Community 51`** (1 nodes): `Add a turn to the conversation buffer.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 52`** (1 nodes): `Structured actionable task extracted from conversation.`
+- **Thin community `Community 52`** (1 nodes): `Return all buffered turns in chronological order.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 53`** (1 nodes): `A complete conversation session.      raw_turns_json is the full conversation lo`
+- **Thin community `Community 53`** (1 nodes): `Return the most recent n turns.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 54`** (1 nodes): `A named entity node in the knowledge graph.`
+- **Thin community `Community 54`** (1 nodes): `Return conversation history in the format expected by FridayBrain         (list`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 55`** (1 nodes): `A typed, weighted, temporal edge between two entity nodes.      Relation type ex`
+- **Thin community `Community 55`** (1 nodes): `Clear the conversation buffer (e.g., on explicit /reset).`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 56`** (1 nodes): `A detected contradiction between two memories, pending resolution.      conflict`
+- **Thin community `Community 56`** (1 nodes): `Store a session-local fact.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 57`** (1 nodes): `The type of a memory unit.      Each type has different:       - decay rate`
+- **Thin community `Community 57`** (1 nodes): `Retrieve a session-local fact.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 58`** (1 nodes): `Where did this memory originate?`
+- **Thin community `Community 58`** (1 nodes): `Remove a session-local fact.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 59`** (1 nodes): `A single typed unit of FRIDAY's long-term memory.      Scoring dimensions:`
+- **Thin community `Community 59`** (1 nodes): `Cache pre-loaded memory candidates for fast context injection.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 60`** (1 nodes): `Composite score used for retrieval ranking.          Weights:           40% conf`
+- **Thin community `Community 60`** (1 nodes): `Retrieve the pre-loaded memory candidate cache.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 61`** (1 nodes): `A structured, actionable task extracted from conversation.`
+- **Thin community `Community 61`** (1 nodes): `Return True if the session is long enough to warrant consolidation.         Cons`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 62`** (1 nodes): `A complete conversation session.      Raw turns are stored for archive/audit. Th`
+- **Thin community `Community 62`** (1 nodes): `Return how long this session has been active.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 63`** (1 nodes): `A named entity in the knowledge graph (person, project, tool, concept).`
+- **Thin community `Community 63`** (1 nodes): `Return a JSON-serialisable snapshot for archiving.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 64`** (1 nodes): `The assembled, ranked, deduplicated memory context ready for     injection into`
+- **Thin community `Community 64`** (1 nodes): `Persistent store for a single typed memory unit.      confidence, stability, and`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 65`** (1 nodes): `Format the context for injection into the FRIDAY system prompt.         Returns`
+- **Thin community `Community 65`** (1 nodes): `Structured actionable task extracted from conversation.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 66`** (1 nodes): `Create all tables and seed providers/keys/models from .env (idempotent).`
+- **Thin community `Community 66`** (1 nodes): `A complete conversation session.      raw_turns_json is the full conversation lo`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 67`** (1 nodes): `Add the active_session singleton table.`
+- **Thin community `Community 67`** (1 nodes): `A named entity node in the knowledge graph.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 68`** (1 nodes): `Drop the active_session table.`
+- **Thin community `Community 68`** (1 nodes): `A typed, weighted, temporal edge between two entity nodes.      Relation type ex`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 69`** (1 nodes): `Reset the active session to settings defaults (default_provider / default_model)`
+- **Thin community `Community 69`** (1 nodes): `A detected contradiction between two memories, pending resolution.      conflict`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 70`** (1 nodes): `Create all tables and seed providers/keys/models from .env (idempotent).`
+- **Thin community `Community 70`** (1 nodes): `The type of a memory unit.      Each type has different:       - decay rate`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 71`** (1 nodes): `Start the Slack Socket Mode bot in a daemon thread.      Uses handler.connect()`
+- **Thin community `Community 71`** (1 nodes): `Where did this memory originate?`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 72`** (1 nodes): `Converts conversation history between Anthropic and OpenAI-compatible formats.`
+- **Thin community `Community 72`** (1 nodes): `A single typed unit of FRIDAY's long-term memory.      Scoring dimensions:`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 73`** (1 nodes): `Convert a conversation history list from one provider's format to another.`
+- **Thin community `Community 73`** (1 nodes): `Composite score used for retrieval ranking.          Weights:           40% conf`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 74`** (1 nodes): `Return 'anthropic' or 'openai' based on provider name.`
+- **Thin community `Community 74`** (1 nodes): `A structured, actionable task extracted from conversation.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 75`** (1 nodes): `Convert Anthropic-format history to OpenAI-compat format.          Anthropic his`
+- **Thin community `Community 75`** (1 nodes): `A complete conversation session.      Raw turns are stored for archive/audit. Th`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Convert Anthropic user-role content blocks to OpenAI messages.         Tool resu`
+- **Thin community `Community 76`** (1 nodes): `A named entity in the knowledge graph (person, project, tool, concept).`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 77`** (1 nodes): `Convert Anthropic assistant content blocks to a single OpenAI assistant message.`
+- **Thin community `Community 77`** (1 nodes): `The assembled, ranked, deduplicated memory context ready for     injection into`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 78`** (1 nodes): `Convert OpenAI-compat format history to Anthropic format.          OpenAI histor`
+- **Thin community `Community 78`** (1 nodes): `Format the context for injection into the FRIDAY system prompt.         Returns`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 79`** (1 nodes): `Extract the 'type' from a block (dict or object).`
+- **Thin community `Community 79`** (1 nodes): `Create all tables and seed providers/keys/models from .env (idempotent).`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 80`** (1 nodes): `Extract text content from a text block.`
+- **Thin community `Community 80`** (1 nodes): `Add the active_session singleton table.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 81`** (1 nodes): `Extract an arbitrary attribute from a block (dict or object).`
+- **Thin community `Community 81`** (1 nodes): `Drop the active_session table.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 82`** (1 nodes): `Ensure content is a list (wraps single blocks).`
+- **Thin community `Community 82`** (1 nodes): `Reset the active session to settings defaults (default_provider / default_model)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 83`** (1 nodes): `A tool invocation parsed from an LLM response.      Attributes:         id   : P`
+- **Thin community `Community 83`** (1 nodes): `Create all tables and seed providers/keys/models from .env (idempotent).`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 84`** (1 nodes): `A single unit yielded by BaseAdapter.stream().      Text chunks arrive increment`
+- **Thin community `Community 84`** (1 nodes): `Start the Slack Socket Mode bot in a daemon thread.      Uses handler.connect()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 85`** (1 nodes): `Abstract base class for all LLM provider adapters.      Each concrete adapter ha`
+- **Thin community `Community 85`** (1 nodes): `Converts conversation history between Anthropic and OpenAI-compatible formats.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 86`** (1 nodes): `Stream one LLM turn.          Args:             messages      : Conversation his`
+- **Thin community `Community 86`** (1 nodes): `Convert a conversation history list from one provider's format to another.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 87`** (1 nodes): `Convert a unified tool definition to this provider's native schema.          Arg`
+- **Thin community `Community 87`** (1 nodes): `Return 'anthropic' or 'openai' based on provider name.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 88`** (1 nodes): `Convert a list of unified tool schemas to provider-native format.          Args:`
+- **Thin community `Community 88`** (1 nodes): `Convert Anthropic-format history to OpenAI-compat format.          Anthropic his`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 89`** (1 nodes): `A registered LLM provider.`
+- **Thin community `Community 89`** (1 nodes): `Convert Anthropic user-role content blocks to OpenAI messages.         Tool resu`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 90`** (1 nodes): `An API key belonging to a provider. Multiple keys per provider are allowed.`
+- **Thin community `Community 90`** (1 nodes): `Convert Anthropic assistant content blocks to a single OpenAI assistant message.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 91`** (1 nodes): `A known model for a given provider.`
+- **Thin community `Community 91`** (1 nodes): `Convert OpenAI-compat format history to Anthropic format.          OpenAI histor`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 92`** (1 nodes): `Single-row table (always id=1) that persists FRIDAY's currently active     LLM s`
+- **Thin community `Community 92`** (1 nodes): `Extract the 'type' from a block (dict or object).`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 93`** (1 nodes): `Deserialize switch_history JSON into a list of dicts.`
+- **Thin community `Community 93`** (1 nodes): `Extract text content from a text block.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 94`** (1 nodes): `Prepend a new entry to switch_history, keeping only the latest 10.         Mutat`
+- **Thin community `Community 94`** (1 nodes): `Extract an arbitrary attribute from a block (dict or object).`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 95`** (1 nodes): `Abstract base class for all FRIDAY tools.`
+- **Thin community `Community 95`** (1 nodes): `Ensure content is a list (wraps single blocks).`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 96`** (1 nodes): `The name of the tool (e.g., 'system_stats'). Must match ^[a-zA-Z0-9_-]{1,64}$ fo`
+- **Thin community `Community 96`** (1 nodes): `A tool invocation parsed from an LLM response.      Attributes:         id   : P`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 97`** (1 nodes): `The JSON schema for the tool's parameters.         Example:         {`
+- **Thin community `Community 97`** (1 nodes): `A single unit yielded by BaseAdapter.stream().      Text chunks arrive increment`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 98`** (1 nodes): `Executes the tool with the given arguments.         Returns a string or JSON-ser`
+- **Thin community `Community 98`** (1 nodes): `Abstract base class for all LLM provider adapters.      Each concrete adapter ha`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 99`** (1 nodes): `Run migrations in 'offline' mode.      This configures the context with just a U`
+- **Thin community `Community 99`** (1 nodes): `Stream one LLM turn.          Args:             messages      : Conversation his`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 100`** (1 nodes): `Run migrations in 'online' mode.      In this scenario we need to create an Engi`
+- **Thin community `Community 100`** (1 nodes): `Convert a unified tool definition to this provider's native schema.          Arg`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 101`** (1 nodes): `A registered LLM provider.`
+- **Thin community `Community 101`** (1 nodes): `Convert a list of unified tool schemas to provider-native format.          Args:`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 102`** (1 nodes): `An API key belonging to a provider. Multiple keys per provider are allowed.`
+- **Thin community `Community 102`** (1 nodes): `A registered LLM provider.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 103`** (1 nodes): `A known model for a given provider.`
+- **Thin community `Community 103`** (1 nodes): `An API key belonging to a provider. Multiple keys per provider are allowed.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 104`** (1 nodes): `Core intelligence component of the FRIDAY Agent.          This class handles t`
+- **Thin community `Community 104`** (1 nodes): `A known model for a given provider.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 105`** (1 nodes): `Retrieves and formats the FRIDAY persona prompt with dynamic context.`
+- **Thin community `Community 105`** (1 nodes): `Single-row table (always id=1) that persists FRIDAY's currently active     LLM s`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 106`** (1 nodes): `Processes user input and streams the LLM response token by token.          Thi`
+- **Thin community `Community 106`** (1 nodes): `Deserialize switch_history JSON into a list of dicts.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 107`** (1 nodes): `Retrieves and formats the FRIDAY persona prompt with dynamic context.`
+- **Thin community `Community 107`** (1 nodes): `Prepend a new entry to switch_history, keeping only the latest 10.         Mutat`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 108`** (1 nodes): `Processes user input and streams the LLM response token by token.`
+- **Thin community `Community 108`** (1 nodes): `Abstract base class for all FRIDAY tools.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 109`** (1 nodes): `Processes the input and yields the response token by token.`
+- **Thin community `Community 109`** (1 nodes): `The name of the tool (e.g., 'system_stats'). Must match ^[a-zA-Z0-9_-]{1,64}$ fo`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 110`** (1 nodes): `The JSON schema for the tool's parameters.         Example:         {`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 111`** (1 nodes): `Executes the tool with the given arguments.         Returns a string or JSON-ser`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 112`** (1 nodes): `Run migrations in 'offline' mode.      This configures the context with just a U`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 113`** (1 nodes): `Run migrations in 'online' mode.      In this scenario we need to create an Engi`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 114`** (1 nodes): `A registered LLM provider.`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 115`** (1 nodes): `An API key belonging to a provider. Multiple keys per provider are allowed.`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 116`** (1 nodes): `A known model for a given provider.`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 117`** (1 nodes): `Core intelligence component of the FRIDAY Agent.          This class handles t`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 118`** (1 nodes): `Retrieves and formats the FRIDAY persona prompt with dynamic context.`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 119`** (1 nodes): `Processes user input and streams the LLM response token by token.          Thi`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 120`** (1 nodes): `Retrieves and formats the FRIDAY persona prompt with dynamic context.`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 121`** (1 nodes): `Processes the input and yields the response token by token.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `LLMProvider` connect `Community 1` to `Community 2`, `Community 4`, `Community 5`, `Community 7`, `Community 8`, `Community 9`?**
-  _High betweenness centrality (0.154) - this node is a cross-community bridge._
-- **Why does `Memory` connect `Community 0` to `Community 3`, `Community 4`?**
-  _High betweenness centrality (0.075) - this node is a cross-community bridge._
-- **Why does `StreamChunk` connect `Community 1` to `Community 2`, `Community 3`, `Community 7`?**
-  _High betweenness centrality (0.073) - this node is a cross-community bridge._
-- **Are the 190 inferred relationships involving `LLMProvider` (e.g. with `Emit SQL to stdout without a live DB connection.` and `Run migrations against the live DB engine.`) actually correct?**
-  _`LLMProvider` has 190 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 161 inferred relationships involving `Memory` (e.g. with `ConflictResult` and `ConflictDetector`) actually correct?**
-  _`Memory` has 161 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 133 inferred relationships involving `APIKey` (e.g. with `Emit SQL to stdout without a live DB connection.` and `Run migrations against the live DB engine.`) actually correct?**
-  _`APIKey` has 133 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 119 inferred relationships involving `MemoryType` (e.g. with `DecayReport` and `DecayEngine`) actually correct?**
-  _`MemoryType` has 119 INFERRED edges - model-reasoned connections that need verification._
+- **Why does `LLMProvider` connect `Community 0` to `Community 1`, `Community 3`, `Community 7`, `Community 8`, `Community 9`, `Community 10`?**
+  _High betweenness centrality (0.113) - this node is a cross-community bridge._
+- **Why does `WorkingMemory` connect `Community 2` to `Community 1`, `Community 5`?**
+  _High betweenness centrality (0.086) - this node is a cross-community bridge._
+- **Why does `StreamChunk` connect `Community 0` to `Community 8`, `Community 1`, `Community 4`?**
+  _High betweenness centrality (0.065) - this node is a cross-community bridge._
+- **Are the 204 inferred relationships involving `LLMProvider` (e.g. with `Emit SQL to stdout without a live DB connection.` and `Run migrations against the live DB engine.`) actually correct?**
+  _`LLMProvider` has 204 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 191 inferred relationships involving `Memory` (e.g. with `ConflictResult` and `ConflictDetector`) actually correct?**
+  _`Memory` has 191 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 147 inferred relationships involving `APIKey` (e.g. with `Emit SQL to stdout without a live DB connection.` and `Run migrations against the live DB engine.`) actually correct?**
+  _`APIKey` has 147 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 136 inferred relationships involving `Task` (e.g. with `EpisodeStore` and `friday/memory/episodic.py  EpisodeStore — Tier 1 of the FRIDAY Memory Mesh.  SQL`) actually correct?**
+  _`Task` has 136 INFERRED edges - model-reasoned connections that need verification._

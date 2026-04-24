@@ -47,6 +47,9 @@ from friday.memory.decay import DecayEngine
 from friday.memory.episodic import EpisodeStore
 from friday.memory.extraction.entity_linker import EntityLinker
 from friday.memory.extraction.pipeline import ExtractionPipeline, ExtractionResult
+from friday.memory.extraction.pattern_generalizer import PatternGeneralizer
+from friday.memory.retrieval.preloader import ProactivePreloader
+from friday.memory.archive.supabase_client import SupabaseArchiver
 from friday.memory.graph import KnowledgeGraph
 from friday.memory.retrieval.engine import QueryIntent as QueryIntent, RetrievalEngine
 from friday.memory.retrieval.intent import LLMIntentClassifier
@@ -86,6 +89,9 @@ class MemoryBus:
         self.conflict_detector = ConflictDetector(self.episode_store, self.vector_store)
         self.decay_engine = DecayEngine(self.episode_store, self.vector_store)
         self.intent_classifier = LLMIntentClassifier()
+        self.pattern_generalizer = PatternGeneralizer()
+        self.preloader = ProactivePreloader(self)
+        self.supabase_archiver = SupabaseArchiver()
 
         # Wire Phase B into retrieval engine
         self.retriever.set_intent_classifier(self.intent_classifier)
@@ -115,6 +121,29 @@ class MemoryBus:
                 # Start Ebbinghaus decay scheduler
                 interval = getattr(settings, "memory_decay_interval_hours", 24.0)
                 self.decay_engine.start_scheduler(interval_hours=interval)
+            except Exception:
+                pass
+            try:
+                # Add pattern pass to decay engine's scheduler if available
+                if self.decay_engine._scheduler:
+                    self.decay_engine._scheduler.add_job(
+                        func=self.run_pattern_pass,
+                        trigger="interval",
+                        hours=48.0,
+                        id="pattern_generalizer",
+                        name="FRIDAY Pattern Generalizer",
+                        replace_existing=True,
+                    )
+
+                    # Schedule proactive preloader every 15 minutes
+                    self.decay_engine._scheduler.add_job(
+                        func=self.preloader.run_preload_pass,
+                        trigger="interval",
+                        minutes=15,
+                        id="proactive_preloader",
+                        name="FRIDAY Proactive Preloader",
+                        replace_existing=True,
+                    )
             except Exception:
                 pass
 
@@ -244,13 +273,17 @@ class MemoryBus:
         result = self.consolidate_session(turns)
 
         if self._current_episode_id:
-            self.episode_store.close_episode(
+            episode = self.episode_store.close_episode(
                 episode_id=self._current_episode_id,
                 summary=summary or "",
                 topics=result.topics if result.success else [],
                 mood=result.mood if result.success else None,
                 memory_ids=[m.id for m in result.memories] if result.success else [],
             )
+
+            # Phase C: Cloud Archiving
+            if episode:
+                self.supabase_archiver.archive_episode(episode)
 
         self._start_episode()
 
@@ -317,6 +350,22 @@ class MemoryBus:
         except Exception:
             return False
 
+    def update_memory(self, memory_id: str, new_content: str) -> bool:
+        """Update the content of an existing memory and sync to vector store."""
+        if not self._enabled:
+            return False
+        try:
+            memory = self.episode_store.get_memory(memory_id)
+            if not memory:
+                return False
+
+            memory.content = new_content
+            self.episode_store.save_memory(memory)
+            self.vector_store.upsert(memory)
+            return True
+        except Exception:
+            return False
+
     # ── Phase B additions ─────────────────────────────────────────────────────
 
     def get_entity_context(self, entity_name: str) -> str:
@@ -353,6 +402,27 @@ class MemoryBus:
         except Exception as e:
             return {"error": str(e)}
 
+    def run_pattern_pass(self) -> dict:
+        """
+        Run the pattern generalizer on recent memories to synthesize insights.
+        Runs automatically via scheduler every 48 hours.
+        """
+        if not self._enabled:
+            return {"enabled": False}
+        try:
+            recent_memories = self.episode_store.get_recent_memories(
+                hours=72, limit=100
+            )
+            new_patterns = self.pattern_generalizer.run_pass(recent_memories)
+
+            for pattern in new_patterns:
+                self.episode_store.save_memory(pattern)
+                self.vector_store.upsert(pattern)
+
+            return {"patterns_generated": len(new_patterns)}
+        except Exception as e:
+            return {"error": str(e)}
+
     def shutdown(self) -> None:
         """
         Clean shutdown — stops the APScheduler gracefully.
@@ -374,6 +444,12 @@ class MemoryBus:
                 session_id=self.working.session_id
             )
             self._current_episode_id = episode.id
+
+            # Phase C: Proactive Preloading at session start
+            try:
+                self.preloader.run_preload_pass()
+            except Exception:
+                pass
         except Exception:
             self._current_episode_id = str(uuid.uuid4())
 

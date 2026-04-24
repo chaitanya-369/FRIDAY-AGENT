@@ -171,3 +171,9 @@ data/
 scratch/
 graphify-out/cache/
 test_tools.py
+audio_check.py
+test_voice_local.py
+voice_launch.py
+pytest_output*.txt
+implementation_plan.md
+models/

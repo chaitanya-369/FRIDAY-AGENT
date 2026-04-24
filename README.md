@@ -293,7 +293,8 @@ friday/
 
 | Document | Description |
 |---|---|
-| [docs/MEMORY.md](docs/MEMORY.md) | Deep technical specification of the Memory Mesh (Phase A + B) |
+| [docs/MEMORY.md](docs/MEMORY.md) | Deep technical specification of the Memory Mesh (Phase A + B + C) |
+| [docs/VOICE.md](docs/VOICE.md) | Technical specification of the Voice Pipeline (Phase 4) |
 | [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) | Extension guide — tools, adapters, memory, KG, retrieval paths |
 | [docs/COMMANDS.md](docs/COMMANDS.md) | Natural language commands reference |
 | [docs/architecture_vision.md](docs/architecture_vision.md) | Full project vision and build phase roadmap |
@@ -309,9 +310,9 @@ friday/
 | **Phase 2** | Slack Socket Mode with streaming replies | ✅ Complete |
 | **Phase 3a** | Memory Mesh Phase A — Typed persistent memory (SQLite + ChromaDB) | ✅ Complete |
 | **Phase 3b** | Memory Mesh Phase B — Knowledge Graph + Conflict Detection + Decay Engine + LLM Intent Classifier | ✅ Complete |
-| **Phase 4** | Voice Pipeline — ElevenLabs TTS + Whisper STT + wake-word detection | 🔜 Planned |
+| **Phase 3c** | Memory Phase C — Pattern Generalizer + Proactive Preloader + Cloud Archiving | ✅ Complete |
+| **Phase 4** | Voice Pipeline — STT, VAD, TTS, Duplex Interruptions | ✅ Complete |
 | **Phase 5** | Desktop HUD — Electron/React with real-time memory graph visualization | 🔜 Planned |
-| **Phase 3c** | Memory Phase C — Pattern Generalizer + Proactive Preloader + Memory Audit API | 🔜 Planned |
 
 ---
 

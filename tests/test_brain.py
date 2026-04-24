@@ -3,10 +3,8 @@ from unittest.mock import Mock, patch
 from friday.core.brain import FridayBrain
 
 
-@patch("friday.core.brain.groq.Groq")
-@patch("friday.core.brain.genai.configure")
-@patch("friday.core.brain.anthropic.Anthropic")
-def test_sliding_window_memory(mock_anthropic, mock_genai, mock_groq):
+@patch("friday.core.brain.LLMRouter")
+def test_sliding_window_memory(mock_llm_router):
     brain = FridayBrain()
 
     # Fill memory with 45 turns (90 messages)
@@ -21,11 +19,9 @@ def test_sliding_window_memory(mock_anthropic, mock_genai, mock_groq):
     assert brain.conversation_history[-1]["content"] == "Reply 44"
 
 
-@patch("friday.core.brain.groq.Groq")
-@patch("friday.core.brain.genai.configure")
-@patch("friday.core.brain.anthropic.Anthropic")
+@patch("friday.core.brain.LLMRouter")
 @patch("friday.core.brain.datetime")
-def test_system_prompt_formatting(mock_datetime, mock_anthropic, mock_genai, mock_groq):
+def test_system_prompt_formatting(mock_datetime, mock_llm_router):
     # Mock datetime to return a specific timestamp and day
     mock_now = Mock()
     mock_now.isoformat.return_value = "2026-04-22T10:00:00"
@@ -33,7 +29,7 @@ def test_system_prompt_formatting(mock_datetime, mock_anthropic, mock_genai, moc
     mock_datetime.now.return_value = mock_now
 
     brain = FridayBrain()
-    system_prompt = brain._get_system_prompt()
+    system_prompt = brain._get_system_prompt("Mock memory block")
 
     assert "2026-04-22T10:00:00" in system_prompt
     assert "Wednesday" in system_prompt

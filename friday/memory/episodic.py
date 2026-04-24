@@ -305,7 +305,7 @@ class EpisodeStore:
         topics: list[str],
         mood: Optional[str],
         memory_ids: list[str],
-    ) -> None:
+    ) -> Optional[Episode]:
         """Mark an episode as complete with summary and extracted memory IDs."""
         with Session(engine) as db:
             row = db.get(EpisodeRow, episode_id)
@@ -317,6 +317,21 @@ class EpisodeStore:
                 row.memory_ids_json = json.dumps(memory_ids)
                 db.add(row)
                 db.commit()
+
+                return Episode(
+                    id=row.id,
+                    session_id=row.session_id,
+                    started_at=row.started_at,
+                    ended_at=row.ended_at,
+                    raw_turns=json.loads(row.raw_turns_json)
+                    if row.raw_turns_json
+                    else [],
+                    summary=row.summary,
+                    topics=topics,
+                    mood=row.mood,
+                    memory_ids=memory_ids,
+                )
+        return None
 
     def get_recent_episode_summary(self, max_age_hours: int = 72) -> Optional[str]:
         """

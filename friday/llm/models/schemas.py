@@ -7,7 +7,7 @@ These are separate from DB models to decouple API shape from storage.
 
 from datetime import datetime
 from typing import Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 # ── Provider ──────────────────────────────────────────────────────────────────
@@ -38,8 +38,7 @@ class ProviderRead(BaseModel):
     priority: int
     created_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 # ── API Key ───────────────────────────────────────────────────────────────────
@@ -71,8 +70,7 @@ class KeyRead(BaseModel):
     last_used_at: Optional[datetime]
     created_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class KeyHealth(BaseModel):
@@ -107,8 +105,7 @@ class ModelRead(BaseModel):
     cost_input_per_1m: Optional[float]
     cost_output_per_1m: Optional[float]
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 # ── Routing Config ────────────────────────────────────────────────────────────

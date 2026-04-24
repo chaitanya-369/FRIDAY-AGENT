@@ -38,6 +38,11 @@ from friday.llm.switch_parser import (
 from friday.llm.adapters.base import StreamChunk
 from friday.memory import MemoryBus
 from friday.tools.router import ToolRouter
+from friday.tools.memory_tools import (
+    MemorySearchTool,
+    MemoryUpdateTool,
+    MemoryDeleteTool,
+)
 
 # ── Observability setup ───────────────────────────────────────────────────────
 if hasattr(settings, "sentry_dsn") and settings.sentry_dsn:
@@ -70,6 +75,12 @@ class FridayBrain:
         self.llm = LLMRouter()
         self.tool_router = ToolRouter()
         self.memory = MemoryBus()  # ← Memory Mesh
+
+        # Register Memory Mesh self-surgery tools
+        self.tool_router.register_tool(MemorySearchTool(self.memory))
+        self.tool_router.register_tool(MemoryUpdateTool(self.memory))
+        self.tool_router.register_tool(MemoryDeleteTool(self.memory))
+
         self.conversation_history: List[Dict[str, Any]] = []
         self._current_provider: str = settings.default_provider
         self._last_user_input: str = ""  # buffered for memory observation
@@ -522,6 +533,17 @@ class FridayBrain:
             try:
                 mem_ctx = self.memory.get_context_for(user_input)
                 memory_context_str = mem_ctx.to_prompt_string()
+
+                # Phase C: Inject preloaded context if present
+                if self.memory.working.preloaded_context:
+                    preloaded_str = (
+                        self.memory.working.preloaded_context.to_prompt_string()
+                    )
+                    if preloaded_str:
+                        memory_context_str = f"[PROACTIVE PRELOADED CONTEXT]\n{preloaded_str}\n\n{memory_context_str}"
+                    # Clear it after use so we don't keep injecting it forever
+                    self.memory.working.preloaded_context = None
+
             except Exception:
                 pass  # Memory failure must never block the response
 
@@ -598,3 +620,27 @@ class FridayBrain:
 
         except Exception as e:
             yield f"\n[FRIDAY Error: {e}]"
+
+    # ── Voice Pipeline Memory Commit ──────────────────────────────────────────
+
+    def commit_memory_explicit(self, user_input: str, assistant_response: str) -> None:
+        """
+        Explicitly commit memory and observe turn. Used by the Voice Pipeline
+        to only commit what was actually spoken (handling interrupts).
+        """
+        if not user_input or not assistant_response or not settings.memory_enabled:
+            return
+
+        # Update history with the explicitly spoken text (replaces the generated one if needed)
+        # Note: Depending on timing, the full generated text might already be in self.conversation_history
+        # due to stream_process finishing. We can trim/replace the last assistant message.
+        if (
+            self.conversation_history
+            and self.conversation_history[-1]["role"] == "assistant"
+        ):
+            self.conversation_history[-1]["content"] = assistant_response
+
+        self.memory.observe_turn(user_input, assistant_response)
+
+        if self.memory.working.should_consolidate():
+            self.memory.consolidate_session_async(self.conversation_history)

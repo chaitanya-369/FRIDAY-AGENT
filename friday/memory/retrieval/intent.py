@@ -223,6 +223,12 @@ class LLMIntentClassifier:
         from friday.config.settings import settings  # noqa: PLC0415
         from friday.llm.adapters.anthropic_adapter import AnthropicAdapter  # noqa: PLC0415
 
+        if (
+            not settings.anthropic_api_key
+            or "your_anthropic" in settings.anthropic_api_key
+        ):
+            return _keyword_fallback(query)
+
         model = getattr(
             settings, "memory_extraction_model", "claude-haiku-4-5-20251001"
         )
@@ -233,7 +239,9 @@ class LLMIntentClassifier:
         for chunk in adapter.stream(
             model=model,
             messages=[{"role": "user", "content": prompt}],
-            system="Respond with exactly one word from the intent vocabulary.",
+            system_prompt="Respond with exactly one word from the intent vocabulary.",
+            api_key=settings.anthropic_api_key,
+            tools=[],
             max_tokens=10,
         ):
             response += chunk

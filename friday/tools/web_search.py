@@ -1,5 +1,5 @@
 from typing import Dict, Any
-from ddgs import DDGS
+from duckduckgo_search import DDGS
 
 from friday.tools.base import BaseTool
 

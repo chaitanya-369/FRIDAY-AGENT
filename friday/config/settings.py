@@ -56,12 +56,25 @@ class Settings(BaseSettings):
     slack_app_token: Optional[str] = None
     slack_channel_id: Optional[str] = "#general"
 
-    # ── Observability (optional) ──────────────────────────────────────────────
+    # ── Observability & Cloud (optional) ──────────────────────────────────────────────
     sentry_dsn: Optional[str] = None
     langfuse_public_key: Optional[str] = None
     langfuse_secret_key: Optional[str] = None
     langfuse_host: Optional[str] = "https://cloud.langfuse.com"
     infisical_token: Optional[str] = None
+
+    # Phase C: Cloud sync
+    supabase_url: Optional[str] = None
+    supabase_key: Optional[str] = None
+
+    # ── Voice Pipeline (ElevenLabs) ──────────────────────────────────────────
+    eleven_api_key: str = ""
+    elevenlabs_api_key: str = ""  # alias
+    elevenlabs_voice_id: str = "Rachel"
+
+    # ── Voice Pipeline (Piper) ───────────────────────────────────────────────
+    piper_model_path: Optional[str] = None
+    piper_config_path: Optional[str] = None
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
